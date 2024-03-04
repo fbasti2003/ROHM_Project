@@ -1,0 +1,179 @@
+SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+(
+	SELECT COUNT(LC2.Department) AS ForApproval
+	FROM DRF_TRANSACTION_Status STAT WITH (NOLOCK)
+	INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+	WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+	AND LC2.Section = LC.Section
+	GROUP BY Department
+) AS ForApproval
+FROM Login_Credentials LC WITH (NOLOCK)
+INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+WHERE UA.[Transaction] = '8'
+
+------------------------------------------------------------------------------
+
+
+
+
+SELECT * FROM 
+(
+	SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+	(
+		SELECT COUNT(LC2.Department) AS ForApproval
+		FROM DRF_TRANSACTION_Status STAT WITH (NOLOCK)
+		INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+		WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+		AND LC2.Section = LC.Section
+		GROUP BY Department
+	) AS ForApproval, 'DRF' AS Module
+	FROM Login_Credentials LC WITH (NOLOCK)
+	INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+	WHERE UA.[Transaction] = '8'
+) AS DRF_Approval WHERE ForApproval > 0
+
+UNION ALL
+
+SELECT * FROM
+(
+	SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+	(
+		SELECT COUNT(LC2.Department) AS ForApproval
+		FROM CRF_TRANSACTION_Status STAT WITH (NOLOCK)
+		INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+		WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+		AND LC2.Section = LC.Section
+		GROUP BY Department
+	) AS ForApproval, 'CRF' AS Module
+	FROM Login_Credentials LC WITH (NOLOCK)
+	INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+	WHERE UA.[Transaction] = '8'
+) AS CRF_Approval WHERE ForApproval > 0
+
+----------------------------------------------------------------------------------------------------------------------------
+
+SELECT * FROM
+	(
+		SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+		(
+			SELECT COUNT(LC2.Department) AS ForApproval
+			FROM CRF_TRANSACTION_Status STAT WITH (NOLOCK)
+			INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+			WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+			AND LC2.Section = LC.Section
+			GROUP BY Department
+		) AS CRF_ForApproval,
+		(
+			SELECT COUNT(LC2.Department) AS ForApproval
+			FROM DRF_TRANSACTION_Status STAT WITH (NOLOCK)
+			INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+			WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+			AND LC2.Section = LC.Section
+			GROUP BY Department
+		) AS DRF_ForApproval
+		FROM Login_Credentials LC WITH (NOLOCK)
+		INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+		WHERE UA.[Transaction] = '8'
+	) AS ForApproval WHERE CRF_ForApproval > 0 OR DRF_ForApproval > 0
+
+----------------------------------------------------------------------------------------------------
+
+
+
+SELECT * FROM
+	(
+		SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+		(
+			SELECT COUNT(LC2.Department) AS ForApproval
+			FROM CRF_TRANSACTION_Status STAT WITH (NOLOCK)
+			INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+			WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+			AND LC2.Section = LC.Section
+			GROUP BY Department
+		) AS CRF_ForApproval,
+
+		(
+			SELECT COUNT(LC2.Department) AS ForApproval
+			FROM DRF_TRANSACTION_Status STAT WITH (NOLOCK)
+			INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON STAT.Requester = LC2.RefId
+			WHERE STAT.STATReq_Manager = 0 AND LC2.Department = LC.Department
+			AND LC2.Section = LC.Section
+			GROUP BY Department
+		) AS DRF_ForApproval,
+
+		(
+			SELECT URF_ForApproval_ProdSecManager FROM 
+			(
+				SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+				(
+					SELECT COUNT(LC2.Department) AS ForApproval
+					FROM URF_TRANSACTION_RequestStatus STAT WITH (NOLOCK)
+					INNER JOIN URF_TRANSACTION_RequestHead HEAD WITH (NOLOCK) ON STAT.CTRLNo = HEAD.CTRLNo
+					INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON HEAD.Requester = LC2.RefId
+					WHERE STAT.STATProdSecManager = 0 AND LC2.Department = LC.Department
+					GROUP BY Department
+				) AS URF_ForApproval_ProdSecManager
+				FROM Login_Credentials LC WITH (NOLOCK)
+				INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+				WHERE UA.[Transaction] = '401'
+			) AS URF_ForApproval_ProdSecManager WHERE RefId = UA.LoginId
+		) AS URF_ForApproval_ProdSecManager,
+
+		(
+			SELECT URF_ForApproval_ProdDeptManager FROM 
+			(
+				SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+				(
+					SELECT COUNT(LC2.Department) AS ForApproval
+					FROM URF_TRANSACTION_RequestStatus STAT WITH (NOLOCK)
+					INNER JOIN URF_TRANSACTION_RequestHead HEAD WITH (NOLOCK) ON STAT.CTRLNo = HEAD.CTRLNo
+					INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON HEAD.Requester = LC2.RefId
+					WHERE STAT.STATProdDeptManager = 0 AND (STAT.STATProdSecManager = 1 OR STAT.STATProdSecManager = -1) AND LC2.Department = LC.Department
+					GROUP BY Department
+				) AS URF_ForApproval_ProdDeptManager
+				FROM Login_Credentials LC WITH (NOLOCK)
+				INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+				WHERE UA.[Transaction] = '402'
+			) AS URF_ForApproval_ProdDeptManager WHERE RefId = UA.LoginId
+		) AS URF_ForApproval_ProdDeptManager,
+
+		(
+			SELECT URF_ForApproval_ProdDivManager FROM 
+			(
+				SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+				(
+					SELECT COUNT(LC2.Department) AS ForApproval
+					FROM URF_TRANSACTION_RequestStatus STAT WITH (NOLOCK)
+					INNER JOIN URF_TRANSACTION_RequestHead HEAD WITH (NOLOCK) ON STAT.CTRLNo = HEAD.CTRLNo
+					INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON HEAD.Requester = LC2.RefId
+					WHERE STAT.STATProdHQManager = 0 AND STAT.STATProdDivManager = 0 
+					AND (STAT.STATProdDeptManager = 1 OR STAT.STATProdDeptManager = -1) AND (STAT.STATProdSecManager = 1 OR STAT.STATProdSecManager = -1) 
+				) AS URF_ForApproval_ProdDivManager
+				FROM Login_Credentials LC WITH (NOLOCK)
+				INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+				WHERE UA.[Transaction] = '403'
+			) AS URF_ForApproval_ProdDivManager WHERE RefId = UA.LoginId
+		) AS URF_ForApproval_ProdDivManager,
+
+		(
+			SELECT URF_ForApproval_ProdHQManager FROM 
+			(
+				SELECT LC.RefId, LC.FullName, LC.EmailAddress, LC.Department, LC.Section,
+				(
+					SELECT COUNT(LC2.Department) AS ForApproval
+					FROM URF_TRANSACTION_RequestStatus STAT WITH (NOLOCK)
+					INNER JOIN URF_TRANSACTION_RequestHead HEAD WITH (NOLOCK) ON STAT.CTRLNo = HEAD.CTRLNo
+					INNER JOIN Login_Credentials LC2 WITH (NOLOCK) ON HEAD.Requester = LC2.RefId
+					WHERE STAT.STATProdHQManager = 0 AND (STAT.STATProdDivManager = 1 OR STAT.STATProdDivManager = -1) 
+					AND (STAT.STATProdDeptManager = 1 OR STAT.STATProdDeptManager = -1) AND (STAT.STATProdSecManager = 1 OR STAT.STATProdSecManager = -1)
+				) AS URF_ForApproval_ProdHQManager
+				FROM Login_Credentials LC WITH (NOLOCK)
+				INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+				WHERE UA.[Transaction] = '404'
+			) AS URF_ForApproval_ProdHQManager WHERE RefId = UA.LoginId
+		) AS URF_ForApproval_ProdHQManager
+
+		FROM Login_Credentials LC WITH (NOLOCK)
+		INNER JOIN UserAccess UA WITH (NOLOCK) ON LC.RefId = UA.LoginId
+		WHERE UA.[Transaction] = '8'
+	) AS ForApproval WHERE CRF_ForApproval > 0 OR DRF_ForApproval > 0

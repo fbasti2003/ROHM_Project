@@ -1,0 +1,11 @@
+- send email to supplier if item is about to expire.
+- need allow access to  all  features (DONE)
+- multiple suppliers need to send (adjust maintenance and transactions)
+- send notifications if TAKE ACTION and EXPIRED to (new maintenance table for notifications) - WALA NA ITO
+- put sample date ung naka red.. ung sample format ex: 11/02/2020 (DONE)
+- sa PERMIT CERTIFICATES (NEW ENTRY)irerename yung "GOV. AGENCY" ng PERMIT CERTIFICATE (tapos gagawin ko na syang dropdown)
+- new maintenance table for PERMIT CERTIFICATE (eto yung dating GOV AGENCY)
+- sa PLM_Permit.aspx yung PERMIT NAME at PERMIT / LICENSE sa gridview at name sa taas irerename ng PERMIT / CERTIFICATION / TEST RESULT
+- gawing 3 ung attachment sa transaction at allowed yung excel file.
+- sa PLM_MT_PermitCertificates_Entry.aspx dapat may drop down kung na may PERMIT/CERTIFICATION/TEST RESULT
+- saPLM_MT_PermitCertificates_Entry.aspx?RefId= dapat meron din ticker kung ano isesend kung TAKE ACTION or EXPIRED OR RENEWED (Tingin ko kahit wala na ito kasi sa Supplier/Broker/Buyer Maintanance table ko na ito nilagay)
