@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>
+	DRF_MCR20080018
+</title>
+
+<script>
+
+function downloadCsv(csvString) {
+  var type = document.getElementById('answerType').value;
+  var countermeasure = document.getElementById('tAnswer').value.split(',').join('');
+  var blob = new Blob([type + ',' + countermeasure]);
+  if (window.navigator.msSaveOrOpenBlob){
+    window.navigator.msSaveBlob(blob, "DRF_MCR20080018.csv");
+  }
+  else {
+    var a = window.document.createElement("a");
+
+    a.href = window.URL.createObjectURL(blob, {
+      type: "text/plain"
+    });
+    a.download = "DRF_MCR20080018.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+} 
+
+</script>
+
+</head>
+<body>
+
+<h2><strong>ROHM ELECTRONICS PHILS. INC.</strong></h2>
+<h1><strong>DISCREPANCY REPORT FORM (DRF)</strong></h1>
+<p></p>
+<table style="width: 100%;">
+<tbody>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>CTRLNo.: </strong>DRF_MCR20080018</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>SUPPLIER:</strong>FERDZTECH SOLUTION FRAMEWORK</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>ATTN:</strong>MR. BASTI ARTADI</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Invoice / DR No.: </strong>INV123456</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>PR/PO No.: </strong>PRPO123</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Description: </strong>PNP: Checkpoints back in MECQ areas</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Type/Drawing No.: </strong>PNP Type</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Order Quantity: </strong>100</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Abnormal Quantity: </strong>20</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Types of Abnormality: </strong>LACKING QUANTITY</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>DETAILED REPORT:</strong>Basically, kung dati ang checkpoints natin ay doon sa mga boundary ng regions at ng mga probinsya, ‘yung mga apektado ng MECQ, pati boundary ng cities and municipalities dapat may mga checkpoints na rin tayo, kasi ang ating iiwasan diyan ay itong mga mag-a-avail ng goods and services na mangingibang bayan pa,” Eleazar said in an interview on ABS-CBN’s Teleradyo.</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 20px;"></td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;">
+<h3><strong>SUPPLIER RESPONSE</strong></h3>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Type:</strong></td>
+</tr>
+<tr style="height: 22px;">
+<td style="height: 22px;"><select id="answerType" style="font-size:20px;">
+<option value=""></option>
+<option value="REWORK">REWORK</option>
+<option value="REPLACE">REPLACE</option>
+<option value="RETURNED">RETURNED</option>
+</select></td>
+</tr>
+<tr style="height: 47px;">
+<td style="height: 47px;  font-size:20px;""><strong>Answer &amp; Countermeasure:</strong></td>
+</tr>
+  <tr>
+    <td>
+    	<textarea id="tAnswer" name="nAnswer" rows="5" cols="105" style="font-size:20px;"></textarea>
+    </td>
+  </tr>
+<tr>
+ <td></td>
+</tr>
+<tr>
+ <td></td>
+</tr>
+<tr>
+ <td><button type="button" onclick="downloadCsv(document.getElementById('answerType').value + ',' + document.getElementById('tAnswer').value)">Save</button></td>
+</tr>
+
+</tbody>
+</table>
+
+
+</body>
+</html>
+

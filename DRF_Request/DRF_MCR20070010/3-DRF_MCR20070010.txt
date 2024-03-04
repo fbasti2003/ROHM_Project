@@ -1,0 +1,11 @@
+1. yung account na pinapatest ni sir renz na may access sa "Allowed User to approved Accounting WITH Commercial"
+   (09330) ay inilagay ko muna sa Service Repair "Allowed user to access Request Approval?" (305) kasi hindi ko 
+   na-update yung Sofra.Master.cs... dapat include ko dun yung ID na pang "Allowed User to approved Accounting WITH Commercial"
+   nasa line 134 yun sa CODES. (ok na yung sa codes sa 134 na-update ko na.. kasama na yun sa build pag next na punta ko)
+   (OK NA ITO. NAPAUPDATE NA ITO KAY MAM JHEANN)
+
+
+2. need ko icheck yung mga related record sa PIPL_Transaction_Status table kasi lumalabas lahat ng item dun sa for approval ni accounting.
+   sabi ni sir renz dapat lahat ng lalabas ng for accounting approval eh yung may mga WITH COMMERCIAL lang.
+
+
