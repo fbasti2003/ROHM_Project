@@ -1,0 +1,6 @@
+ferdie.mangaliman@controlbox.net
+password: mangaliman01
+IMAP Server: mail.controlbox.net
+Port: 143
+SMTP Server: mail.controlbox.net
+Port: 557

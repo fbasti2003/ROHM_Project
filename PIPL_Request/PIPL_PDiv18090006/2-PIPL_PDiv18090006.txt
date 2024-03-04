@@ -1,0 +1,865 @@
+<%@ Page Language="C#" Title="Sending RFQ To Suppliers" AutoEventWireup="true" CodeBehind="RFQToSuppliers.aspx.cs" Inherits="ROHM_RFQ.RFQToSuppliers" MasterPageFile="~/Main.Master" %>
+
+<asp:Content ID="content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script type="text/javascript">
+
+        function divexpandcollapse(divname) {
+
+            var div = document.getElementById(divname);
+            var img = document.getElementById('img' + divname);
+
+            if (div.style.display == "none") {
+                div.style.display = "inline";
+                img.src = "images/collapse.png";
+
+            } else {
+                div.style.display = "none";
+                img.src = "images/expand.png";
+            }
+
+        }
+
+        function hidePopUp() {
+
+            $(".PopupPanel-Outer").hide();
+            $(".PopupPanel-Inner").hide();
+            document.body.style.cursor = 'default';
+
+        }
+
+        function createPopUpPanel(isHead, divname) {
+            var style = "overflow:auto; display:inline; position: relative; left: 15px;";
+
+            $(divname).attr("style", style);
+
+            $(".PopupPanel-Outer").show();
+            $(".PopupPanel-Inner").show();
+            document.body.style.cursor = 'default';
+        }
+        
+    </script>
+    
+    <style type="text/css">
+        .divTable
+        {
+            display:table;
+        }
+        .divTitle
+        {
+            display:table-caption;
+            font-weight:bold;
+            font-size:14px;	
+        }
+        .divRow
+        {
+            display:table-row;
+        }
+        .leftCell
+        {
+            display:table-cell;
+            padding-right:5px;
+            text-align:right;
+            vertical-align:top;
+            padding-bottom:5px;
+        	
+        }
+        .rightCell
+        {
+            display:table-cell;
+            padding-right:5px;
+            text-align:left;
+            padding-bottom:5px;
+        }
+        .PopupPanel-Outer
+        {
+        	width:100%;
+        	height:100%;
+        	top:0;
+        	left:0;
+        	background-color:Gray;
+        	position:fixed;
+        	background: rgb(0,0,0);
+        	background:rgba(0,0,0,0.6);
+        	display:none;
+        }
+        .PopupPanel-Inner
+        {
+        	border: solid 1px black;
+        	position:fixed;
+        	left:50%;
+        	top:60%;
+        	background-color:White;
+        	z-index:100;
+        	
+        	margin-top: -200px;
+        	width:600px;
+        	margin-left:-300px;
+        	float:left;
+        	padding:10px 10px 10px 10px;
+        }
+        .divCreate-InsertPanel2
+        {
+        	position:relative;
+        	background-color:White;
+        	width:600px;
+        }
+
+    </style>
+    
+    <asp:ScriptManager EnablePartialRendering="true" ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
+
+    <div style="height:390px; width:100%; overflow:auto; font-style:normal;">
+        <div style="height:25px; width:270px; background-color:White; margin-left:45px; margin-top:5px;">
+            <p style="font-size:14px;">PURCHASING APPROVAL FORM</p>
+        </div>
+        <div style="height:350px; width:1280px; margin-left:45px; position:absolute; margin-top:5px; font-weight:normal;">
+            
+            <div style="background-color:White; border: 2px solid #73AD21; height:350px; width:180px; float:left;">
+                       
+                <div style="margin-left:15px; margin-top:10px;">
+                    <p style="font-size:12px;">RFQ # :</p>
+                </div>
+                <div style="margin-left:15px; margin-top:-10px;">
+                    <asp:TextBox ID="txtRFQNo" runat="server" Width="100px" Height="20px" Font-Bold="true" Font-Size="14px" style="text-transform:uppercase" />
+                </div>
+                                
+                <div style="margin-left:15px;  margin-top:15px;">
+                    <asp:Button ID="btnSubmit" runat="server" Text="SUBMIT" 
+                        onclick="btnSubmit_Click" />
+                </div>
+                
+            </div>
+            
+            <div style="border: 2px solid #73AD21; height:350px; width:1095px; float:left; margin-left:5px; overflow-y:auto;">
+                
+                <asp:GridView ID="gvRequestHead" AutoGenerateColumns="false" runat="server" AlternatingRowStyle-BackColor="#FFFFCC"
+                                           HeaderStyle-BackColor="Green" AllowPaging="true" HeaderStyle-ForeColor="White" OnRowCommand="gvRequestHead_RowCommand"
+                                           EmptyDataText="No Record Found!" PagerStyle-BackColor="WhiteSmoke" PagerStyle-Font-Size="12px"
+                                           PagerStyle-Font-Names="Tahoma" PagerStyle-HorizontalAlign="Left" PageSize="30" Font-Size="12px"
+                                           DataKeyNames="RhRfqNo" OnRowDataBound="gvRequestHead_OnRowDataBound" OnPageIndexChanging="gvRequestHead_PageIndexChanging"
+                                           PagerSettings-NextPageText="Next" PagerSettings-PreviousPageText="Previous">
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderStyle-Width="10px">
+                                        <ItemTemplate>
+                                            <a href="JavaScript:divexpandcollapse('div<%# Eval("RhRfqNo") %>');">
+                                                <img id="imgdiv<%# Eval("RhRfqNo") %>" border="0" src="images/expand.png" alt="" />
+                                            </a>                   
+                                        </ItemTemplate>
+                                        <ItemStyle Width="20px" VerticalAlign="Middle"></ItemStyle>
+                                    </asp:TemplateField>
+                                  </Columns> 
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="RFQNO" HeaderStyle-Width="150px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblRFQNo" runat="server" Text='<%# Eval("RhRfqNo") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>                                                                           
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="DIVISION" HeaderStyle-Width="150px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblDivision" runat="server" Text='<%# Eval("SDivision") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>    
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="DEPARTMENT" HeaderStyle-Width="140px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblDepartment" runat="server" Text='<%# Eval("SDepartment") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>  
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="SECTION" HeaderStyle-Width="140px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblSection" runat="server" Text='<%# Eval("SSection") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns> 
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="REQUESTOR" HeaderStyle-Width="150px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblRequester" runat="server" Text='<%# Eval("RequesterFullName") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>   
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="REQUESTED DATE" HeaderStyle-Width="140px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblTransactionDate" runat="server" Text='<%# Eval("TransactionDate") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns> 
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="CATEGORY" HeaderStyle-Width="140px" ItemStyle-HorizontalAlign="Left" Visible="false" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblCategory" runat="server" Text='<%# Eval("Category") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="PROD. MANAGER" HeaderStyle-Width="250px" ItemStyle-HorizontalAlign="Center" Visible="false" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblProdManagerStatus" runat="server" Text='<%# Eval("ProdManagerStatus") %>' />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="BUYER" HeaderStyle-Width="250px" ItemStyle-HorizontalAlign="Center" Visible="false" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblBuyerStatus" runat="server" Text='<%# Eval("BuyerStatus") %>' />
+                                            <asp:LinkButton ID="linkApprovedBuyer" Width="100px" runat="server" Text="APPROVED"
+                                                        CommandName="btnApprovedBuyer_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />                                                        
+                                            <asp:LinkButton ID="linkDisapprovedBuyer" Width="100px" runat="server" Text="DISAPPROVED"
+                                                        CommandName="btnDisapprovedBuyer_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />                                            
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="IN-CHARGE" HeaderStyle-Width="250px" ItemStyle-HorizontalAlign="Center" Visible="false" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblInChargeStatus" runat="server" Text='<%# Eval("PurchasingInchargeStatus") %>' />
+                                            <asp:LinkButton ID="linkApprovedInCharge" Width="100px" runat="server" Text="APPROVED"
+                                                        CommandName="btnApprovedInCharge_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />                                                        
+                                            <asp:LinkButton ID="linkDisapprovedInCharge" Width="100px" runat="server" Text="DISAPPROVED"
+                                                        CommandName="btnDisapprovedInCharge_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="DEPT. MANAGER" HeaderStyle-Width="250px" ItemStyle-HorizontalAlign="Center" Visible="false" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblDeptManagerStatus" runat="server" Text='<%# Eval("DepartmentManagerStatus") %>' />
+                                            <asp:LinkButton ID="linkApprovedDeptManager" Width="100px" runat="server" Text="APPROVED"
+                                                        CommandName="btnApprovedDeptManager_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />                                                        
+                                            <asp:LinkButton ID="linkDisapprovedDeptManager" Width="100px" runat="server" Text="DISAPPROVED"
+                                                        CommandName="btnDisapprovedDeptManager_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>                                                                   
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="DIV. MANAGER" HeaderStyle-Width="250px" ItemStyle-HorizontalAlign="Center" Visible="false" >
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblDivisionManager" runat="server" Text='<%# Eval("DivisionManagerStatus") %>' />
+                                            <asp:LinkButton ID="linkApprovedDivisionManager" Width="100px" runat="server" Text="APPROVED"
+                                                        CommandName="btnApprovedDivisionManager_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />                                                        
+                                            <asp:LinkButton ID="linkDisapprovedDivisionManager" Width="100px" runat="server" Text="DISAPPROVED"
+                                                        CommandName="btnDisapprovedDivisionManager_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <%--<Columns>
+                                    <asp:TemplateField HeaderText="ACTION" HeaderStyle-Width="100px" ItemStyle-HorizontalAlign="Center" >
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnApproved" Width="85px" runat="server" Text="APPROVED"
+                                                        CommandName="btnApproved_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                            <asp:Button ID="btnReturn" Width="85px" runat="server" Text="RETURN"
+                                                        CommandName="btnReturn_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />                                            
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>--%>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="SUPPLIERS" HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Left" >
+                                        <ItemTemplate>
+                                            <asp:CheckBoxList ID="cblSuppliers" runat="server" >                                                
+                                            </asp:CheckBoxList>
+                                            <asp:Label ID="lblSuppliers" runat="server" Visible="false" />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField HeaderText="SUPPLIERS" HeaderStyle-Width="200px" ItemStyle-HorizontalAlign="Center" >
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="btnSendToSuppliers" Width="200px" runat="server" Text="SEND REQUEST"
+                                                        CommandName="btnSendToSuppliers_Command" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" /> 
+                                            <asp:Label ID="lblSentRequest" runat="server" Visible="false" Text="REQUEST SENT" Font-Bold="true" />
+                                        </ItemTemplate>    
+                                    </asp:TemplateField>
+                                  </Columns>
+                                  
+                                  <Columns>
+                                    <asp:TemplateField>
+                                        <ItemTemplate>
+                                            <tr>
+                                                <td colspan="100%" style="background-color:White;">
+                                                <div id="div<%# Eval("RhRfqNo") %>"  style="overflow:auto; display:none; position: relative; left: 15px; overflow: auto">
+                                                <asp:GridView ID="gvRequestDetails" runat="server" AutoGenerateColumns="false" HeaderStyle-BackColor="Green" HeaderStyle-ForeColor="White"
+                                                                BorderWidth="2px" BackColor="#B0E0E6"
+                                                                AlternatingRowStyle-BackColor="#CCFFFF" EmptyDataText="No Record" Font-Size="12px" BorderColor="#3399CC">
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="No." ItemStyle-HorizontalAlign="Center">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="detailsNum" runat="server" Text='<%# ((GridViewRow) Container).RowIndex + 1%>' ForeColor="Black" />
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="DESCRIPTION" ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Description") %>' Width="200px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="SPECS/DRAWING NO." ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblDescription" runat="server" Text='<%# Eval("Specs") %>' Width="200px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="MAKER" ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblMaker" runat="server" Text='<%# Eval("Maker") %>' Width="200px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="QTY." ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblQuantity" runat="server" Text='<%# Eval("Quantity") %>' Width="50px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="UOM" ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblUOM" runat="server" Text='<%# Eval("UOM") %>' Width="70px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>                                                                                                      
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="REMARKS" ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblRemarks" runat="server" Text='<%# Eval("Remarks") %>' Width="200px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                    <Columns>
+                                                        <asp:TemplateField HeaderText="ATTACHMENT" ItemStyle-HorizontalAlign="Left">
+                                                            <ItemTemplate>
+                                                                <asp:Label ID="lblAttachment" runat="server" Text='<%# Eval("Attachment") %>' Width="100px" ForeColor="Black"/>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                    
+                                                </asp:GridView>
+                                                </div>                            
+                                            </td>
+                                            </tr>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                  </Columns>
+                
+                </asp:GridView>
+                
+            </div>
+            
+            <div id="PopupPanel-Outer-ID" class="PopupPanel-Outer">
+                <div id="PopupPanel-Inner-ID" class="PopupPanel-Inner">
+                
+                    <div class="divCreate-InsertPanel2">
+                        <div class="divTable">
+                            <div class="divTitle">
+                                <p>DISAPPROVAL CAUSE</p>
+                            </div>
+                            <div class="divRow">
+                                <div class="leftCell">RFQ Number :</div>
+                                <div class="rightCell"><asp:Label ID="lblRFQNoCause" runat="server" Font-Bold="true" /></div>                                
+                            </div>
+                            <div class="divRow">
+                                <div class="leftCell">Transaction Name :</div>
+                                <div class="rightCell"><asp:Label ID="lblTransactionNameCause" runat="server" Font-Bold="true" /></div>                                
+                            </div>
+                            <div class="divRow">
+                                <div class="leftCell">CAUSE :</div>
+                                <div class="rightCell">
+                                    <asp:TextBox ID="txtCause" runat="server" TextMode="MultiLine" Width="450px" Height="150px" />
+                                </div>
+                            </div>
+                            
+                            <div class="divRow">
+                                <div class="leftCell">
+                                    <asp:Button ID="btnCancel" runat="server" Text="CANCEL" OnClientClick="hidePopUp()" />   
+                                </div>                 
+                                <div class="rightCell">  
+                                    <asp:Button ID="btnOk" runat="server" Text="SUBMIT" onclick="btnOk_Click" />                                                               
+                                </div>
+                            </div>
+                                                
+                        </div>
+                    </div> 
+                       
+                </div>
+            </div>
+            
+        </div>              
+                     
+    </div>
+    
+    </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data;
+
+namespace ROHM_RFQ
+{
+    public partial class RFQToSuppliers : System.Web.UI.Page
+    {
+        BusinessLayer BLL = new BusinessLayer();
+        string requester = string.Empty;
+        Common common = new Common();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                if (Session["LcRefId"] == null)
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    if (BLL.isUserAccessExist(Session["LcRefId"].ToString(), ConfigurationManager.AppSettings["PurchasingApprovalAccess"].ToString()))
+                    {
+                        LoadDefaultData();
+                    }
+                    else
+                    {
+                        Response.Redirect("RFQEntry.aspx");
+                    }
+                }
+            }
+        }
+
+        private void LoadDefaultData()
+        {
+            try
+            {
+                requester = Session["LcRefId"].ToString();
+
+                gvRequestHead.DataSource = BLL.getRequestHeadRFQToSuppliers();
+                gvRequestHead.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void gvRequestHead_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvRequestHead.PageIndex = e.NewPageIndex;
+
+            LoadDefaultData();
+        }
+
+        private string setElementValue(GridView gv, int index, string controlName, string controlType)
+        {
+
+            string returnValue = string.Empty;
+
+            try
+            {
+                switch (controlType)
+                {
+                    case "TextBox":
+                        TextBox textbox = (TextBox)gv.Rows[index].FindControl(controlName);
+                        returnValue = textbox.Text;
+                        break;
+                    case "Label":
+                        Label label = (Label)gv.Rows[index].FindControl(controlName);
+                        returnValue = label.Text;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return returnValue;
+        }
+
+        protected void gvRequestHead_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int index = int.Parse(e.CommandArgument.ToString());
+            //int purchasingApproved = 0;
+            //int buyerApproved = 0;
+            //int buyerApproved2 = 0;
+            //int inchargeApproved = 0;
+            //int inchargeApproved2 = 0;
+            //int deptManagerApproved = 0;
+            //int deptManagerApproved2 = 0;
+            //int divManagerApproved = 0;
+            //int divManagerApproved2 = 0;
+
+            //string RFQNo = setElementValue(gvRequestHead, index, "lblRFQNo", "Label");
+
+            //if (e.CommandName == "btnApproved_Command")
+            //{
+            //    purchasingApproved = BLL.approvedRequestByPurchasing(RFQNo.Trim());
+
+            //    if (purchasingApproved > 0)
+            //    {
+
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "Review", "alert('Request '" + RFQNo + "' has been approved.')", true);
+            //        LoadDefaultData();
+            //    }
+            //}
+
+            //if (e.CommandName == "btnApprovedBuyer_Command")
+            //{
+            //    buyerApproved = BLL.approvedDisapprovedRequestByBuyer(RFQNo.Trim(), "1");
+
+            //    if (buyerApproved > 0)
+            //    {
+            //        RequestApprovalHistory entities = new RequestApprovalHistory();
+            //        entities.RfqNo = RFQNo.Trim();
+            //        entities.TransactionName = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingBuyer"];
+            //        entities.ApprovedBy = requester;
+
+            //        buyerApproved2 = BLL.approvedRequest(entities);
+
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "Approved", "alert('Request '" + RFQNo.Trim() + "' has been approved')", true);
+            //        LoadDefaultData();
+            //    }
+            //}
+
+            //if (e.CommandName == "btnApprovedInCharge_Command")
+            //{
+            //    inchargeApproved = BLL.approvedDisapprovedRequestByIncharge(RFQNo.Trim(), "1");
+
+            //    if (inchargeApproved > 0)
+            //    {
+            //        RequestApprovalHistory entities = new RequestApprovalHistory();
+            //        entities.RfqNo = RFQNo.Trim();
+            //        entities.TransactionName = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingIncharge"];
+            //        entities.ApprovedBy = requester;
+
+            //        inchargeApproved2 = BLL.approvedRequest(entities);
+
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "Approved", "alert('Request '" + RFQNo.Trim() + "' has been approved')", true);
+            //        LoadDefaultData();
+            //    }
+            //}
+
+            //if (e.CommandName == "btnApprovedDeptManager_Command")
+            //{
+            //    deptManagerApproved = BLL.approvedDisapprovedRequestByDepartmentManager(RFQNo.Trim(), "1");
+
+            //    if (deptManagerApproved > 0)
+            //    {
+            //        RequestApprovalHistory entities = new RequestApprovalHistory();
+            //        entities.RfqNo = RFQNo.Trim();
+            //        entities.TransactionName = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingDeptManager"];
+            //        entities.ApprovedBy = requester;
+
+            //        deptManagerApproved2 = BLL.approvedRequest(entities);
+
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "Approved", "alert('Request '" + RFQNo.Trim() + "' has been approved')", true);
+            //        LoadDefaultData();
+            //    }
+            //}
+
+
+            //if (e.CommandName == "btnApprovedDivisionManager_Command")
+            //{
+            //    divManagerApproved = BLL.approvedDisapprovedRequestByDivisionManager(RFQNo.Trim(), "1");
+
+            //    if (divManagerApproved > 0)
+            //    {
+            //        RequestApprovalHistory entities = new RequestApprovalHistory();
+            //        entities.RfqNo = RFQNo.Trim();
+            //        entities.TransactionName = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingDivManager"];
+            //        entities.ApprovedBy = requester;
+
+            //        divManagerApproved2 = BLL.approvedRequest(entities);
+
+            //        ScriptManager.RegisterStartupScript(this, GetType(), "Approved", "alert('Request '" + RFQNo.Trim() + "' has been approved')", true);
+            //        LoadDefaultData();
+            //    }
+            //}
+
+            //if (e.CommandName == "btnDisapprovedBuyer_Command")
+            //{
+            //    lblRFQNoCause.Text = RFQNo.Trim();
+            //    lblTransactionNameCause.Text = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingBuyer"];
+            //    ScriptManager.RegisterStartupScript(this, GetType(), "PopUp", "createPopUpPanel()", true);
+            //}
+
+            //if (e.CommandName == "btnDisapprovedInCharge_Command")
+            //{
+            //    lblRFQNoCause.Text = RFQNo.Trim();
+            //    lblTransactionNameCause.Text = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingIncharge"];
+            //    ScriptManager.RegisterStartupScript(this, GetType(), "PopUp", "createPopUpPanel()", true);
+            //}
+
+            //if (e.CommandName == "btnDisapprovedDeptManager_Command")
+            //{
+            //    lblRFQNoCause.Text = RFQNo.Trim();
+            //    lblTransactionNameCause.Text = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingDeptManager"];
+            //    ScriptManager.RegisterStartupScript(this, GetType(), "PopUp", "createPopUpPanel()", true);
+            //}
+
+            //if (e.CommandName == "btnDisapprovedDivisionManager_Command")
+            //{
+            //    lblRFQNoCause.Text = RFQNo.Trim();
+            //    lblTransactionNameCause.Text = ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingDivManager"];
+            //    ScriptManager.RegisterStartupScript(this, GetType(), "PopUp", "createPopUpPanel()", true);
+            //}
+
+            string RFQNo = setElementValue(gvRequestHead, index, "lblRFQNo", "Label");
+            requester = Session["LcRefId"].ToString();
+            int head = 0;
+            int details = 0;
+            
+            if (e.CommandName == "btnSendToSuppliers_Command")
+            {
+                //int idx = int.Parse(e.CommandArgument.ToString());
+                GridViewRow row = gvRequestHead.Rows[index];
+                CheckBoxList cbSup = (CheckBoxList)row.FindControl("cblSuppliers");
+
+                RFQToSuppliersHead entitiesHead = new RFQToSuppliersHead();
+                entitiesHead.RfqNo = RFQNo.Trim();
+                entitiesHead.SendBy = requester.Trim();
+
+                head = BLL.insertRFQToSuppliersHead(entitiesHead);
+
+                if (head > 0)
+                {
+
+                    List<RequestDetails> reqDetails = new List<RequestDetails>();
+                    reqDetails = BLL.getRequestDetailsByRFQNo(RFQNo.Trim());
+
+                    for (int i = 0; i < cbSup.Items.Count; i++)
+                    {
+                        if (cbSup.Items[i].Selected)
+                        {
+                            foreach (RequestDetails rd in reqDetails)
+                            {
+                                RFQToSuppliersDetails entitiesDetails = new RFQToSuppliersDetails();
+                                entitiesDetails.RfqNo = RFQNo.Trim();
+                                entitiesDetails.RequestDetailsRefId = rd.RdRefId.ToString();
+                                entitiesDetails.Supplier = cbSup.Items[i].Value;
+
+                                details = BLL.insertRFQToSuppliersDetails(entitiesDetails);
+                            }
+                        }
+                    }
+
+                    
+
+                }
+
+                LoadDefaultData();
+
+            }
+
+
+
+        }
+
+        protected void gvRequestHead_OnRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            try
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {                    
+                    Label lblRFQNo = (Label)e.Row.FindControl("lblRFQNo");
+                    Label lblRequester = (Label)e.Row.FindControl("lblRequester");
+                    Label lblDivision = (Label)e.Row.FindControl("lblDivision");
+                    Label lblDepartment = (Label)e.Row.FindControl("lblDepartment");
+                    Label lblSection = (Label)e.Row.FindControl("lblSection");
+                    Label lblProdManagerStatus = (Label)e.Row.FindControl("lblProdManagerStatus");
+                    Label lblBuyerStatus = (Label)e.Row.FindControl("lblBuyerStatus");
+                    Label lblInChargeStatus = (Label)e.Row.FindControl("lblInChargeStatus");
+                    Label lblDeptManagerStatus = (Label)e.Row.FindControl("lblDeptManagerStatus");
+                    Label lblDivisionManager = (Label)e.Row.FindControl("lblDivisionManager");
+                    Label lblCategory = (Label)e.Row.FindControl("lblCategory");
+                    //Button btnApproved = (Button)e.Row.FindControl("btnApproved");
+                    //Button btnReturn = (Button)e.Row.FindControl("btnReturn");
+                    LinkButton linkApprovedBuyer = (LinkButton)e.Row.FindControl("linkApprovedBuyer");
+                    LinkButton linkDisapprovedBuyer = (LinkButton)e.Row.FindControl("linkDisapprovedBuyer");
+                    LinkButton linkApprovedInCharge = (LinkButton)e.Row.FindControl("linkApprovedInCharge");
+                    LinkButton linkDisapprovedInCharge = (LinkButton)e.Row.FindControl("linkDisapprovedInCharge");
+                    LinkButton linkApprovedDeptManager = (LinkButton)e.Row.FindControl("linkApprovedDeptManager");
+                    LinkButton linkDisapprovedDeptManager = (LinkButton)e.Row.FindControl("linkDisapprovedDeptManager");
+                    LinkButton linkApprovedDivisionManager = (LinkButton)e.Row.FindControl("linkApprovedDivisionManager");
+                    LinkButton linkDisapprovedDivisionManager = (LinkButton)e.Row.FindControl("linkDisapprovedDivisionManager");                    
+                    CheckBoxList cblSuppliers = (CheckBoxList)e.Row.FindControl("cblSuppliers");
+                    Label lblSuppliers = (Label)e.Row.FindControl("lblSuppliers");
+                    Label lblSentRequest = (Label)e.Row.FindControl("lblSentRequest");
+                    LinkButton btnSendToSuppliers = (LinkButton)e.Row.FindControl("btnSendToSuppliers");                    
+                    
+
+                    GridView gvRequestDetails = e.Row.FindControl("gvRequestDetails") as GridView;
+
+                    common.linkStatusVisibility(lblProdManagerStatus.Text, lblBuyerStatus.Text, lblInChargeStatus.Text,
+                                                lblDeptManagerStatus.Text, lblDivisionManager.Text,
+                                                linkApprovedBuyer, linkDisapprovedBuyer,
+                                                linkApprovedInCharge, linkDisapprovedInCharge,
+                                                linkApprovedDeptManager, linkDisapprovedDeptManager,
+                                                linkApprovedDivisionManager, linkDisapprovedDivisionManager);
+
+                    lblProdManagerStatus.Text = common.tempStatus(lblProdManagerStatus);
+                    lblBuyerStatus.Text = common.tempStatus(lblBuyerStatus);
+                    lblInChargeStatus.Text = common.tempStatus(lblInChargeStatus);
+                    lblDeptManagerStatus.Text = common.tempStatus(lblDeptManagerStatus);
+                    lblDivisionManager.Text = common.tempStatus(lblDivisionManager);
+
+                    List<MTSupplier> supplierList = new List<MTSupplier>();
+                    supplierList = BLL.getAvailableSuppliersPerCategory(lblCategory.Text.Trim());
+
+                    int supplierCount = 0;
+                    foreach (MTSupplier supplier in supplierList)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = supplier.Name;
+                        item.Value = supplier.RefId.ToString();
+                        cblSuppliers.Items.Add(item);
+                        cblSuppliers.Items[supplierCount].Selected = true;
+                        lblSuppliers.Text += "<div style='margin-bottom:2px;'>- " + supplier.Name + "</div>";
+                        supplierCount++;
+                    }
+
+                    RFQToSuppliersHead rfqHead = new RFQToSuppliersHead();
+                    rfqHead.RfqNo = lblRFQNo.Text.Trim();
+
+                    if (BLL.isRFQToSupplierExist(rfqHead))
+                    {
+                        cblSuppliers.Visible = false;
+                        lblSuppliers.Visible = true;
+                        lblSentRequest.Visible = true;
+                        btnSendToSuppliers.Visible = false;
+                    }
+
+                    gvRequestDetails.DataSource = BLL.getRequestDetailsByRFQNo(lblRFQNo.Text.Trim());
+                    gvRequestDetails.DataBind();
+
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                requester = Session["LcRefId"].ToString();
+
+                gvRequestHead.DataSource = BLL.getRequestHeadByRFQNo(txtRFQNo.Text.Trim(), int.Parse(requester));
+                gvRequestHead.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+            requester = Session["LcRefId"].ToString();
+            int buyerApproved = 0;
+            int buyerDisapproved = 0;
+            int inchargeApproved = 0;
+            int inchargeDisapproved = 0;
+            int deptManagerApproved = 0;
+            int deptManagerDisapproved = 0;
+            int divManagerApproved = 0;
+            int divManagerDisapproved = 0;
+
+
+            RequestDisapprovalHistory entities = new RequestDisapprovalHistory();
+            entities.RfqNo = lblRFQNoCause.Text.Trim();
+            entities.Cause = txtCause.Text;
+            entities.TransactionName = lblTransactionNameCause.Text.Trim();
+            entities.DisapprovedBy = requester;
+
+            if (entities.TransactionName == ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingBuyer"])
+            {
+                buyerDisapproved = BLL.disapprovedRequest(entities);
+                if (buyerDisapproved > 0)
+                {
+                    buyerApproved = BLL.approvedDisapprovedRequestByBuyer(entities.RfqNo.Trim(), "2");
+                }
+            }
+            if (entities.TransactionName == ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingIncharge"])
+            {
+                inchargeDisapproved = BLL.disapprovedRequest(entities);
+                if (inchargeDisapproved > 0)
+                {
+                    inchargeApproved = BLL.approvedDisapprovedRequestByIncharge(entities.RfqNo.Trim(), "2");
+                }
+            }
+            if (entities.TransactionName == ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingDeptManager"])
+            {
+                deptManagerDisapproved = BLL.disapprovedRequest(entities);
+                if (deptManagerDisapproved > 0)
+                {
+                    deptManagerApproved = BLL.approvedDisapprovedRequestByDepartmentManager(entities.RfqNo.Trim(), "2");
+                }
+            }
+            if (entities.TransactionName == ConfigurationManager.AppSettings["ApprovedDisapprovedName-PurchasingDivManager"])
+            {
+                divManagerDisapproved = BLL.disapprovedRequest(entities);
+                if (divManagerDisapproved > 0)
+                {
+                    divManagerApproved = BLL.approvedDisapprovedRequestByDivisionManager(entities.RfqNo.Trim(), "2");
+                }
+            }
+
+            LoadDefaultData();
+
+            ScriptManager.RegisterStartupScript(this, GetType(), "PopUp", "alert('Item has been disapproved.')", true);
+            ScriptManager.RegisterStartupScript(this, GetType(), "PopUp", "hidePopUp()", true);
+        }
+
+
+    }
+
+}

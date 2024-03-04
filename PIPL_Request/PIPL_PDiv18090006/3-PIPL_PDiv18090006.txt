@@ -1,0 +1,72 @@
+send email tru customize email
+
+
+public void SendEmailMessage(string emailBodyType, string emailSubjectType, string userValue, string incidentValue, string approveLink)
+        {
+            try
+            {
+                MailMessage message = new MailMessage();
+
+                string[] toAddressArray;
+                toAddressArray = ConfigurationManager.AppSettings["email-to"].ToString().Split(new char[] { ';' });
+
+                foreach (string a in toAddressArray)
+                {
+                    message.To.Add(a);
+                }
+
+                //message.To.Add(ConfigurationManager.AppSettings["email-to"]);
+
+                message.Subject = ConfigurationManager.AppSettings[emailSubjectType];
+                message.From = new MailAddress(ConfigurationManager.AppSettings["email-from"]);
+
+                message.Body = Convert.ToString(GetEmailTextFile(ConfigurationManager.AppSettings[emailBodyType])
+                                    .Replace("uservalue", userValue).Replace("incidentvalue", incidentValue)
+                                    .Replace("approveLink", approveLink));
+
+                message.IsBodyHtml = true;
+
+                SmtpClient smtp = new SmtpClient(ConfigurationManager.AppSettings["email-smtp-client"]);
+                smtp.Send(message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+---------------------------------------------------------------------------------------------------------------
+
+send email tru gmail
+
+
+ MailMessage mail = new MailMessage();
+        SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+        //get the userID, Pass
+        userID= register.userName;
+        password = register.pass;
+
+
+        string aa=txtTo.Text;
+        mail.From = new MailAddress(userID);
+        mail.To.Add(aa);
+        mail.Subject = txtsubject.Text;
+        mail.Body = txtComments.Text;
+
+        //Attach file
+        mail.Attachments.Add(new Attachment(txtAttachments.Text.ToString()));       
+        SmtpServer.Port = 587;
+        SmtpServer.UseDefaultCredentials = false;
+        SmtpServer.Credentials = new System.Net.NetworkCredential(userID, password);
+        SmtpServer.EnableSsl = true;
+        SmtpServer.Send(mail);
+        MessageBox.Show("Email sent successfully");
+        this.Cursor = Cursors.Default;
+
+        //close the page
+        Email email = new Email();
+        email.Close();
