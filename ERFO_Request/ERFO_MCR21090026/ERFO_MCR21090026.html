@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>
+	val_title
+</title>
+
+<script>
+
+function downloadCsv(csvString) {
+  var countermeasure = document.getElementById('tAnswer').value.split(',').join('');
+  var blob = new Blob([countermeasure]);
+ if (countermeasure == '') 
+{
+  alert('RESPONSE FIELD MUST NOT BE BLANK');
+} else {
+  if (window.navigator.msSaveOrOpenBlob){
+    window.navigator.msSaveBlob(blob, "ERFO_MCR21090026.csv");
+  }
+  else {
+    var a = window.document.createElement("a");
+
+    a.href = window.URL.createObjectURL(blob, {
+      type: "text/plain"
+    });
+    a.download = "ERFO_MCR21090026.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+} 
+
+</script>
+
+</head>
+<body>
+
+<h2><strong>ROHM ELECTRONICS PHILS. INC.</strong></h2>
+<h1><strong>EQUIPMENT REQUEST FOR OPERATION</strong></h1>
+<p></p>
+<table style="width: 100%;">
+<tbody>
+<h3><strong>SUPPLIER RESPONSE</strong></h3>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>CTRLNo.: </strong>ERFO_MCR21090026</td>
+</tr>
+<tr style="height: 47px;">
+<td style="height: 47px;  font-size:20px;""><strong>RESPONSE</strong></td>
+</tr>
+  <tr>
+    <td>
+    	<textarea id="tAnswer" name="nAnswer" rows="5" cols="105" style="font-size:20px;"></textarea>
+    </td>
+  </tr>
+<tr>
+ <td></td>
+</tr>
+<tr>
+ <td></td>
+</tr>
+<tr>
+ <td><button type="button" onclick="downloadCsv(document.getElementById('tAnswer').value)">Save</button></td>
+</tr>
+
+</tbody>
+</table>
+
+
+</body>
+</html>
+
