@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>
+	CRF_MCR20120007
+</title>
+
+<script>
+
+function downloadCsv(csvString) {
+  var cCBy = document.getElementById('cCBy').value;
+  var cDC = document.getElementById('cDC').value.split(',').join('');
+  var nNotes = document.getElementById('nNotes').value.split(',').join('');
+  var blob = new Blob([cCBy + ',' + cDC + ',' + nNotes]);
+  if (cCBy == '')
+{
+  alert('Confirmed By must not be blank');
+} else if (cDC == '') 
+{
+  alert('Date Confirmed must not be blank');
+} else {
+  if (window.navigator.msSaveOrOpenBlob){
+    window.navigator.msSaveBlob(blob, "CRF_MCR20120007.csv");
+  }
+  else {
+    var a = window.document.createElement("a");
+
+    a.href = window.URL.createObjectURL(blob, {
+      type: "text/plain"
+    });
+    a.download = "CRF_MCR20120007.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+}
+} 
+
+</script>
+
+</head>
+<body>
+
+<h2><strong>ROHM ELECTRONICS PHILS. INC.</strong></h2>
+<h1><strong>CANCEL REQUEST FORM (CRF)</strong></h1>
+<p></p>
+<table style="width: 100%;">
+<tbody>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>CTRLNo.: </strong>CRF_MCR20120007</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>SUPPLIER:</strong>FERDZTECH SOLUTION FRAMEWORK</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Division:</strong>PURCHASING DIVISION</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>Dept./Process:</strong>PURCHASING DEPARTMENT</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>PR. No.: </strong>123</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>PO. No.: </strong>123</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>DESCRIPTION: </strong>123</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>TYPE.: </strong>123</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>QUANTITY: </strong>1</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>REASON: </strong>CHANGE SPECIFICATION</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 20px;"></td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;">
+<h3><strong>SUPPLIER RESPONSE</strong></h3>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>CONFIRMED BY:</strong></td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;">
+<textarea id="cCBy" name="cCBy" rows="1" cols="105" style="font-size:20px;"></textarea>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>DATE CONFIRMED: </strong></td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;">
+<textarea id="cDC" name="cDC" rows="1" cols="105" style="font-size:20px;"></textarea>
+</td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;"><strong>NOTES: </strong></td>
+</tr>
+<tr style="height: 21px;">
+<td style="height: 21px; font-size:20px;">
+<textarea id="nNotes" name="nNotes" rows="5" cols="105" style="font-size:20px;"></textarea>
+</td>
+</tr>
+<tr>
+ <td></td>
+</tr>
+<tr>
+ <td></td>
+</tr>
+<tr>
+ <td><button type="button" onclick="downloadCsv(document.getElementById('cCBy').value + ',' + document.getElementById('cDC').value + ',' + document.getElementById('nNotes').value)">Save</button></td>
+</tr>
+
+</tbody>
+</table>
+
+
+</body>
+</html>
+

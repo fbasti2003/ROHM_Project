@@ -1,0 +1,128 @@
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+
+<title>
+	CRF_MCR21070063
+</title>
+
+<script>
+
+function exportTableToCSV() {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+    var prefixCB = 'cb';
+	var prefixDC = 'dc';
+	var prefixNT = 'nt';
+	var csvValue = '';
+	var csvValueHeader = '';
+	
+	try 
+	{
+		for (var i = 0; i < rows.length; i++) {
+			var row = [], cols = rows[i].querySelectorAll("td, th");
+			
+			for (var j = 0; j < cols.length; j++) 
+			{
+				if (i > 0)
+					{
+					//CONFIRMED BY
+						if (j == 8)
+						{
+							if (document.getElementById(prefixCB + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + ",";
+							} else {
+								csvValue+= document.getElementById(prefixCB + i).value.split(',').join('') + ",";
+							}	
+						} 
+					//DATE CONFIRMED
+						else if (j == 9)
+						{
+							if (document.getElementById(prefixDC + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + ",";
+							} else {
+								csvValue+= document.getElementById(prefixDC + i).value.split(',').join('') + ",";
+							}	
+						} 
+					//NOTES
+						else if (j == 10)
+						{
+							if (document.getElementById(prefixNT + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + "\n";
+							} else {
+								csvValue+= document.getElementById(prefixNT + i).value.split(',').join('') + "\n";
+							}	
+						} else {
+						    csvValue+= cols[j].innerText + ",";
+						}
+					} else {
+					
+						if (j == 10)
+						{
+							csvValueHeader+= cols[j].innerText + "\n";
+						} else {
+							csvValueHeader+= cols[j].innerText + ",";
+						}	
+					}
+
+				
+			
+			}	
+
+			
+							
+		}
+		
+		csv.push(csvValueHeader + csvValue);
+		
+		//---------------------------------------------------------------------------------
+		var blob = new Blob([csv]);
+
+		  if (window.navigator.msSaveOrOpenBlob){
+			window.navigator.msSaveBlob(blob, "CRF_MCR21070063.csv");
+		  }
+		  else {
+			var a = window.document.createElement("a");
+
+			a.href = window.URL.createObjectURL(blob, {
+			  type: "text/plain"
+			});
+			a.download = "CRF_MCR21070063.csv";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+
+		}
+		//---------------------------------------------------------------------------------
+	}
+	catch(err) {
+		alert(err.message);
+	}
+}
+
+</script>
+
+</head>
+<body>
+
+<p style="height: 21px; font-size:20px;"><b>CTRLNo.: </b>CRF_MCR21070063</p>
+<p style="height: 21px; font-size:20px;"><b>ATTENTION: </b>TEST</p>
+<p style="height: 21px; font-size:20px;"><b>DIVISION: </b>PURCHASING DIVISION</p>
+<p style="height: 21px; font-size:20px;"><b>DEPARTMENT/PROCESS: </b>PURCHASING DEPARTMENT</p>
+<p style="height: 21px; font-size:20px;"><b>SUPPLIER:</b>FERDZTECH SOLUTION FRAMEWORK</p>
+
+<p><table style='width:100%;'><tr><th>REFID</th><th>PONO</th><th>PRNO</th><th>DESCRIPTION</th><th>TYPE/DRAWING</th><th>QUANTITY</th><th>UNIT OF MEASURE</th><th>REASON</th><th>CONFIRMED BY</th><th>DATE CONFIRMED</th><th>NOTES</th></tr><tr><td>30099</td><td>2</td><td>2</td><td>2</td><td>2</td><td>2</td><td>box</td><td>CHANGE MAKER</td><td><input type='text' id='cb1' name='cb1'></td><td><input type='text' id='dc1' name='dc1'></td><td><input type='text' id='nt1' name='nt1'></td></tr></table></p>
+<button type="button" onclick="exportTableToCSV()">Save</button>
+
+
+</body>
+</html>
+

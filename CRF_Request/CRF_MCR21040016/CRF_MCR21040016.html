@@ -1,0 +1,140 @@
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+
+<title>
+	CRF_MCR21040016
+</title>
+
+<script>
+
+function exportTableToCSV() {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+    var prefixCB = 'cb';
+	var prefixDC = 'dc';
+	var prefixNT = 'nt';
+	var csvValue = '';
+	var csvValueHeader = '';
+	
+	try 
+	{
+		for (var i = 0; i < rows.length; i++) {
+			var row = [], cols = rows[i].querySelectorAll("td, th");
+			
+			for (var j = 0; j < cols.length; j++) 
+			{
+				if (i > 0)
+					{
+					//CONFIRMED BY
+						if (j == 8)
+						{
+							if (document.getElementById(prefixCB + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + "\n";
+							} else {
+								csvValue+= document.getElementById(prefixCB + i).value.split(',').join('') + "\n";
+							}	
+						} else {
+							csvValue+= cols[j].innerText + ",";
+						}
+					//DATE CONFIRMED
+						if (j == 9)
+						{
+							if (document.getElementById(prefixDC + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + "\n";
+							} else {
+								csvValue+= document.getElementById(prefixDC + i).value.split(',').join('') + "\n";
+							}	
+						} else {
+							csvValue+= cols[j].innerText + ",";
+						}
+					//NOTES
+						if (j == 10)
+						{
+							if (document.getElementById(prefixNT + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + "\n";
+							} else {
+								csvValue+= document.getElementById(prefixNT + i).value.split(',').join('') + "\n";
+							}	
+						} else {
+							csvValue+= cols[j].innerText + ",";
+						}
+					} else {
+					//CONFIRMED BY
+						if (j == 8)
+						{
+							csvValueHeader+= cols[j].innerText + "\n";
+						} else {
+							csvValueHeader+= cols[j].innerText + ",";
+						}
+					//DATE CONFIRMED
+						if (j == 9)
+						{
+							csvValueHeader+= cols[j].innerText + "\n";
+						} else {
+							csvValueHeader+= cols[j].innerText + ",";
+						}	
+					//NOTES
+						if (j == 10)
+						{
+							csvValueHeader+= cols[j].innerText + "\n";
+						} else {
+							csvValueHeader+= cols[j].innerText + ",";
+						}	
+					}			
+			}						
+							
+		}
+		
+		csv.push(csvValueHeader + csvValue);
+		
+		//---------------------------------------------------------------------------------
+		var blob = new Blob([csv]);
+
+		  if (window.navigator.msSaveOrOpenBlob){
+			window.navigator.msSaveBlob(blob, "CRF_MCR21040016.csv");
+		  }
+		  else {
+			var a = window.document.createElement("a");
+
+			a.href = window.URL.createObjectURL(blob, {
+			  type: "text/plain"
+			});
+			a.download = "CRF_MCR21040016.csv";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+
+		}
+		//---------------------------------------------------------------------------------
+	}
+	catch(err) {
+		alert(err.message);
+	}
+}
+
+
+</head>
+<body>
+
+<p style="height: 21px; font-size:20px;"><b>CTRLNo.: </b>CRF_MCR21040016</p>
+<p style="height: 21px; font-size:20px;"><b>ATTENTION: </b></p>
+<p style="height: 21px; font-size:20px;"><b>DIVISION: </b>PURCHASING DIVISION</p>
+<p style="height: 21px; font-size:20px;"><b>DEPARTMENT/PROCESS: </b>PURCHASING DEPARTMENT</p>
+<p style="height: 21px; font-size:20px;"><b>SUPPLIER:</b></p>
+
+<p><table style='width:100%;'><tr><th>REFID</th><th>PONO</th><th>PRNO</th><th>DESCRIPTION</th><th>TYPE/DRAWING</th><th>QUANTITY</th><th>UNIT OF MEASURE</th><th>REASON</th><th>CONFIRMED BY</th><th>DATE CONFIRMED</th><th>NOTES</th></tr><tr><td>30031</td><td>10</td><td>prno10</td><td>ITEM9</td><td>SPECS10</td><td>1000.00</td><td>PCS</td><td>PRICE CHANGE</td><td><input type='text' id='cb1' name='cb0'></td><td><input type='text' id='dc1' name='dc0'></td><td><input type='text' id='nt1' name='nt0'></td></tr></table></p>
+<button type="button" onclick="exportTableToCSV()">Save</button>
+
+
+</body>
+</html>
+
