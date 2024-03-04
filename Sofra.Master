@@ -1,0 +1,755 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Sofra.master.cs" Inherits="REPI_PUR_SOFRA.Sofra" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>REPI_PUR_SOFRA</title>
+    
+    <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/node-waves/waves.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/animate-css/animate.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/morrisjs/morris.css" rel="stylesheet" type="text/css" />            
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/themes/all-themes.css" rel="stylesheet" type="text/css" />
+    
+    <link href="plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" /> 
+    <link href="plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/nouislider/nouislider.min.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet" type="text/css" />
+    <link href="css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+    
+    <style>
+        /* Dropdown Button */
+        .dropbtn {
+          background-color: #009688;
+          color: white;
+          padding: 12px;
+          font-size: 12px;
+          border: none;
+          height:20px;
+          padding-top: 3px;
+          margin-top: -20px;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+          height:20px;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f1f1f1;
+          min-width: 220px;         
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+          font-size:12px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+          color: black;
+          padding: 2px 16px;
+          text-decoration: none;
+          display: block;
+          height: 20px;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {display: block;}
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+    </style>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="theme-red">
+    <form id="form1" runat="server">
+    <div>
+    
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    
+    <div style="border: none; position: fixed; top: 0; left: 0; z-index: 12; width: 100%; background-color: #00BCD4; height:20px;">
+        <div style="height:25px;">
+            <div style="height:25px;">
+                <a style="padding:30px 0 0 5px; color:White;" href="Dashboard.aspx">SUPPLY CHAIN SOLUTION FRAMEWORK v2.0</a>
+                <div style="float:right; padding-right:30px;">
+                    <asp:Label ID="lblUser" runat="server" ForeColor="White" Font-Size="14px" />
+                    <asp:LinkButton ID="lbLogOut" runat="server" Text="LOG-OUT" Visible="false" Font-Size="11px" Font-Bold="true" OnClick="lbLogOut_Click" />
+                </div>
+            </div>            
+        </div>
+        
+      <div class="dropdown">
+      <button class="dropbtn">PROFORMA</button>
+      <div class="dropdown-content">
+        <a runat="server" id="proforma_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_mt_company" href="PIPL_MT_Company.aspx">Company</a>
+        <a runat="server" id="li_mt_modeofshipment" href="PIPL_MT_ModeOfShipment.aspx">Mode of Shipment</a>
+        <a runat="server" id="li_mt_commercialvalue" href="PIPL_MT_CommercialValue.aspx">Commercial Value</a>
+        <a runat="server" id="li_mt_tradeterms" href="PIPL_MT_TradeTerms.aspx">Trade Terms</a>
+        <a runat="server" id="li_mt_pickuplocation" href="PIPL_MT_PickUpLocation.aspx">Pick-up Location</a>
+        <a runat="server" id="li_mt_packng" href="PIPL_MT_Packing.aspx">Packing</a>
+        <a runat="server" id="li_mt_natureofgoods" href="PIPL_MT_NatureOfGoods.aspx">Nature of Goods</a>
+        <a runat="server" id="li_mt_countryoforigin" href="PIPL_MT_CountryOfOrigin.aspx">Country of Origin</a>
+        <a runat="server" id="li_mt_purpose" href="PIPL_MT_Purpose.aspx">Purpose</a>
+        <a runat="server" id="li_mt_caseunit" href="PIPL_MT_CaseUnit.aspx">Case Unit</a>
+        <a runat="server" id="proforma_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_pipl_invoceentryi" href="PIPL_InvoiceEntry.aspx?ControlNo_From_Details=">Request Entry</a>
+        <a runat="server" id="li_pipl_invoiceinquiry" href="PIPL_InvoiceInquiry.aspx">Request Monitoring</a>
+        <a runat="server" id="li_pipl_approvalform" href="PIPL_ApprovalForm.aspx">Request For Approval</a>
+        <a runat="server" id="li_pipl_AllRequest" href="PIPL_AllRequestForm.aspx">All Request</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">SERVICE REPAIR</button>
+      <div class="dropdown-content">
+        <a runat="server" id="srf_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_srf_purposeofpullout" href="SRF_MT_PurposeOfPullOut.aspx">Purpose of Pull Out</a>
+        <a runat="server" id="li_srf_loa" href="SRF_MT_LOA.aspx">LOA</a>
+        <a runat="server" id="li_srf_loa_distribution" href="SRF_MT_LOA_Distribution.aspx">LOA Distribution</a>
+        <a runat="server" id="li_srf_pullout_container_tubes" style="color:Red;" href="SRF_MT_ContainerTubes.aspx">PullOut Container Tubes</a>
+        <a runat="server" id="li_srf_pullout_ic_trays" style="color:Red;" href="SRF_MT_ICTrays.aspx">PullOut IC Trays</a>
+        <a runat="server" id="li_srf_pullout_others" style="color:Red;" href="SRF_MT_Others.aspx">PullOut Other Items</a>
+        <a runat="server" id="srf_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_srf_entry" href="SRF_RequestEntry.aspx?SRF_ControlNo_From_Details=">Request Entry</a>
+        <a runat="server" id="li_srf_monitoring" href="SRF_RequestInquiry.aspx">Request Monitoring</a>
+        <a runat="server" id="li_srf_approval" href="SRF_ApprovalForm.aspx">Request For Approval</a>
+        <a runat="server" id="li_srf_allrequest" href="SRF_AllRequest.aspx">All Request</a>
+        <a runat="server" id="li_srf_allrequestfreeform" href="SRF_AllRequestFreeForm.aspx">All Request (Free Form)</a>
+        <a runat="server" id="li_srf_warehouse" href="SRF_Warehouse2.aspx">Warehouse Receiving Entry</a>
+        <a runat="server" id="li_srf_8105_entry" href="SRF_8105Entry2.aspx">Warehouse 8105 Receiving Entry</a>
+        <a runat="server" id="li_srf_received_without_documents" href="SRF_Warehouse_WithoutDocuments.aspx">Warehouse Without Documents</a>
+        <a runat="server" id="li_srf_quantity_adjustment_history" href="SRF_Quantity_Adjustment_History.aspx">Quantity Ajustment History</a>
+        <a runat="server" id="li_srf_poentry" style="color:Red;" href="SRF_PO_RequestEntry.aspx?SRFNo_PO_From_Inquiry=">PullOut Request Entry</a>
+        <a runat="server" id="li_srf_pomonitoring" style="color:Red;" href="SRF_PO_RequestInquiry.aspx">PullOut Request Monitoring</a>
+        <a runat="server" id="li_srf_poapproval" style="color:Red;" href="SRF_PO_ApprovalForm.aspx">PullOut Request For Approval</a>
+        <a runat="server" id="li_srf_poallrequest" style="color:Red;" href="SRF_PO_AllRequest.aspx">PullOut All Request</a>
+        <a runat="server" id="li_srf_poreporting" style="color:Red;" href="SRF_PO_Reporting.aspx">PullOut Report Form</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">REQUEST FOR QUOTATION</button>
+      <div class="dropdown-content">
+        <a runat="server" id="rfq_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_rfq_section" href="RFQ_MT_Section.aspx">Section Table</a>
+        <a runat="server" id="li_rfq_department" href="RFQ_MT_Department.aspx">Department</a>
+        <a runat="server" id="li_rfq_division" href="RFQ_MT_Division.aspx">Division</a>
+        <a runat="server" id="li_rfq_pc" href="RFQ_MT_PC.aspx">PC</a>
+        <a runat="server" id="li_rfq_hq" href="RFQ_MT_HQ.aspx">HQ</a>
+        <a runat="server" id="li_rfq_category" href="RFQ_MT_Category.aspx">Category</a>
+        <a runat="server" id="li_rfq_unitofmeasure" href="RFQ_MT_UnitOfMeasure.aspx">Unit Of Measure</a>
+        <a runat="server" id="li_rfq_currency" href="RFQ_MT_Currency.aspx">Currency</a>
+        <a runat="server" id="li_rfq_supplier" href="RFQ_MT_Supplier.aspx">Supplier</a>
+        <a runat="server" id="li_rfq_buyer_information" href="RFQ_MT_BuyerInformation.aspx">Buyer Information</a>
+        <a runat="server" id="rfq_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_rfq_requestentry" href="RFQ_RequestEntry.aspx?RFQNo_From_Inquiry=">Request Entry</a>
+        <a runat="server" id="li_rfq_requestinquiry" href="RFQ_Monitoring.aspx">Request Monitoring</a>
+        <a runat="server" id="li_rfq_myrequesterrequest" href="RFQ_MyRequesterItems.aspx">My Requesters Items</a>
+        <a runat="server" id="li_rfq_purchasingreceiving" href="RFQ_PurchasingReceiving.aspx">Request For Receiving</a>
+        <a runat="server" id="li_rfq_withnoresponse" href="RFQ_WithNoResponse.aspx">RFQ With No Response</a>
+        <a runat="server" id="li_rfq_approvalform" href="RFQ_ApprovalForm.aspx">Request For Approval</a>
+        <a runat="server" id="li_rfq_allapprovedrequest" href="RFQ_AllRequest.aspx">All Request</a>
+        <a runat="server" id="li_rfq_notmycategory" href="RFQ_NotMyCategoryHistory.aspx">Not My Category History</a>
+        <a runat="server" id="rfq_reporting" href="" style="background-color:#9E9E9E; color:White;"><b>REPORTING</b></a>
+        <a runat="server" id="li_rfq_statusreport" href="RFQ_StatusReport.aspx">Status Report</a>
+        <a runat="server" id="li_rfq_allrequest_exporttoexcel" href="RFQ_AllRequest_ExportToExcel.aspx?trans=sending">Export to Excel (For Sending)</a>
+        <a runat="server" id="li_rfq_allrequest_exporttoexcel_resend" href="RFQ_AllRequest_ExportToExcel.aspx?trans=resend">Export to Excel (For Resend)</a>
+        <a runat="server" id="li_rfq_allrequest_exporttoexcel_approved" href="RFQ_AllRequest_ExportToExcel.aspx?trans=approved">Export to Excel (All Approved)</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">URGENT REQUEST</button>
+      <div class="dropdown-content">
+        <a runat="server" id="urf_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_urf_reason" href="URF_MT_Reason.aspx">Reason</a>
+        <a runat="server" id="urf_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_urf_requestentry" href="URF_RequestEntry_New.aspx?URFNo_From_Inquiry=">Request Entry</a>
+        <a runat="server" id="li_urf_requestinquiry" href="URF_RequestInquiry.aspx">Request Monitoring</a>
+        <a runat="server" id="li_urf_approvalform" href="URF_ApprovalForm_New2.aspx">Request For Approval</a>
+        <a runat="server" id="li_urf_receivingentry" href="URF_ReceivingEntry.aspx">Request Receiving Entry</a>
+        <a runat="server" id="li_urf_allrequest" href="URF_AllRequest_New2.aspx">All Request</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">DISCREPANCY REPORT</button>
+      <div class="dropdown-content">
+        <a runat="server" id="drf_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_drf_typesofabnormality" href="DRF_MT_TypesOfAbnormality.aspx">Type of Abnormality</a>
+        <a runat="server" id="drf_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_drf_requestentry" href="DRF_RequestEntry.aspx?DRFNo_From_Inquiry=">Request Entry</a>
+        <a runat="server" id="li_drf_requestinquiry" href="DRF_RequestInquiry.aspx">Request Monitoring</a>
+        <a runat="server" id="li_drf_approvalform" href="DRF_ApprovalForm.aspx">Request For Approval</a>
+        <a runat="server" id="li_drf_receivingentry" href="DRF_ReceivingEntry.aspx">Request Receiving Entry</a>
+        <a runat="server" id="li_drf_allrequest" href="DRF_AllRequest_New.aspx">All Request</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">CANCEL REQUEST</button>
+      <div class="dropdown-content">
+        <a runat="server" id="crf_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_crf_mt_reason" href="CRF_MT_Reason.aspx">Reason</a>
+        <a runat="server" id="crf_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_crf_requestentry" href="CRF_RequestEntry.aspx?CRFNo_From_Inquiry=">Request Entry</a>
+        <a runat="server" id="li_crf_requestinquiry" href="CRF_RequestInquiry.aspx">Request Monitoring</a>
+        <a runat="server" id="li_crf_approvalform" href="CRF_ApprovalForm.aspx">Request For Approval</a>
+        <a runat="server" id="li_crf_receivingentry" href="CRF_ReceivingEntry.aspx">Request Receiving Entry</a>
+        <a runat="server" id="li_crf_allrequest" href="CRF_AllRequest_New.aspx">All Request</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">PERMITS</button>
+      <div class="dropdown-content">
+        <a runat="server" id="permits_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_plm_mt_permitcertificates" href="PLM_MT_PermitCertificates.aspx">Permit Certificates</a>
+        <a runat="server" id="li_plm_mt_supplier" href="PLM_MT_Supplier.aspx">Supplier/Broker/Buyer Table</a>
+        <a runat="server" id="li_plm_mt_governmentagencies" href="PLM_MT_GovernmentAgencies.aspx">Permit Certificate Agency</a>
+        <a runat="server" id="permits_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_plm_permitentry" href="PLM_Permit.aspx">Permit / License</a>
+        <a runat="server" id="li_plm_permithistory" href="PLM_PermitHistory.aspx">Permit History</a>
+        
+      </div>
+    </div>
+    
+    <div class="dropdown" id="menu_supplier_evaluation" runat="server" style="margin-top:10px;">
+      <button class="dropbtn">SUPPLIER EVALUATION</button>
+      <div class="dropdown-content">
+        <a runat="server" id="se_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_se_mt_piscalyear" href="SE_MT_FiscalYear.aspx">Fiscal Year</a>
+        <a runat="server" id="li_se_mt_evaluationcriteria_formaker" href="SE_MT_EvaluationCriteriaForMaker.aspx">Evaluation Criteria (For Maker)</a>
+        <a runat="server" id="li_se_mt_evaluationcriteria_fortrader" href="SE_MT_EvaluationCriteriaForTrader.aspx">Evaluation Criteria (For Trader)</a>
+        <a runat="server" id="li_se_mt_qualityevaluationcriteria" href="SE_MT_EvaluationCriteriaForMaterial.aspx">Quality Evaluation Criteria</a>
+        <a runat="server" id="se_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_se_evaluationentry" href="SE_EvaluationEntry.aspx?fy_year=&send_evaluation=false">Evaluation Request Entry</a>
+        <a runat="server" id="li_se_evaluationmonitoring" href="SE_EvaluationMonitoring.aspx">Evaluation Request Monitoring</a>
+        <a runat="server" id="li_se_evaluationtable" href="SE_SupplierEvaluation.aspx">Supplier Evaluation Table</a>     
+        <a runat="server" id="li_se_evaluation_forapproval" href="SE_SupplierEvaluationForApproval.aspx">Supplier Evaluation Approval</a>  
+        <a runat="server" id="li_se_evaluation_report" href="SE_SupplierEvaluation_Report.aspx">Supplier Evaluation Report</a>    
+        <a runat="server" id="li_se_downloadaudittrail" href="SE_ReportDownloadAuditTrail.aspx">Downloaded Report Audit Trail</a>
+      </div>
+    
+    </div>        
+    
+    <div class="dropdown" style="margin-top:10px;">
+      <button class="dropbtn">ADMIN</button>
+      <div class="dropdown-content">
+        <a runat="server" id="li_sa_common_useraccess" href="SA_Common_UserAccess.aspx">User Access</a>
+        <a runat="server" id="li_sa_servicelogs" href="SA_Common_ServiceLogs.aspx">Service Transaction Logs</a>
+        <a runat="server" id="li_sa_systeminformation" href="SA_Common_SystemInformation.aspx">System Information</a>
+      </div>
+    </div>
+    
+    <br />
+    
+    <div class="dropdown" style="margin-top:5px;">
+      <button class="dropbtn">EQUIPMENT REQUEST FOR OPERATION</button>
+      <div class="dropdown-content">
+        <a runat="server" id="erfo_mt" href="" style="background-color:#9E9E9E; color:White;"><b>MAINTAINANCE TABLE</b></a>
+        <a runat="server" id="li_erfo_poo" href="ERFO_MT_PurposeOfOperation.aspx">Purpose Of Operation</a>
+        <a runat="server" id="li_erfo_er" href="ERFO_MT_EquipmentRequirement.aspx">Equipment/s Requirement</a>
+        <a runat="server" id="li_erfo_ad" href="ERFO_MT_AttachedDocument.aspx">Attached Document</a>
+        <a runat="server" id="li_erfo_rc" href="ERFO_MT_RecommendedContractor.aspx">Recommended Contractor</a>
+        <a runat="server" id="erfo_trans" href="" style="background-color:#9E9E9E; color:White;"><b>TRANSACTIONS</b></a>
+        <a runat="server" id="li_erfo_requestentry" href="ERFO_RequestEntry.aspx?ERFOFNo_From_Inquiry=">Equipment Request Entry</a>
+        <a runat="server" id="li_erfo_requestmonitoring" href="ERFO_RequestInquiry.aspx">Equipment Request Monitoring</a>
+        <a runat="server" id="li_erfo_requestapproval" href="ERFO_ApprovalForm.aspx">Equipment Request Approval</a>  
+        <a runat="server" id="li_erfo_receivingentry" href="ERFO_ReceivingEntry.aspx">Equipment Request Receiving Entry</a> 
+        <a runat="server" id="li_erfo_allrequest" href="ERFO_AllRequest.aspx">Equipment All Request</a> 
+      </div>
+    </div>
+    
+    <div class="dropdown" style="margin-top:5px;">
+      <button class="dropbtn">REPORTING</button>
+      <div class="dropdown-content">
+        <a runat="server" id="rpt_rfq" href="REPORTING_RFQ.aspx">Request For Quotation</a>
+        <a runat="server" id="rpt_srf" href="REPORTING_SRF.aspx">Service Repair Form</a>
+        <a runat="server" id="rpt_proforma" href="REPORTING_PROFORMA.aspx">Proforma Invoice</a>
+        <a runat="server" id="rpt_drf" href="REPORTING_DRF.aspx">Discrepancy Report Form</a>
+        <a runat="server" id="rpt_crf" href="REPORTING_CRF.aspx">Cancel Request Form</a>
+        <a runat="server" id="rpt_urf" href="REPORTING_URF.aspx">Urgent Request Form</a>
+      </div>
+    </div>
+    
+    </div>
+    
+    
+
+    <%--<div>
+        <!-- Left Sidebar -->
+        <div id="leftsidebar" class="sidebar" style="width:300px; height:100%; margin-top:-50px;">            
+            <!-- Menu -->
+            <div class="menu" style="font-size:12px;">
+                <ul class="list">                                       
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">PROFORMA INVOICE AND PACKING LIST</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="ul_pipl_mt" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_mt_company" runat="server" >
+                                        <a href="PIPL_MT_Company.aspx">Company</a>
+                                    </li>
+                                    <li id="li_mt_modeofshipment" runat="server" >
+                                        <a href="PIPL_MT_ModeOfShipment.aspx">Mode of Shipment</a>
+                                    </li>
+                                    <li id="li_mt_commercialvalue" runat="server" >
+                                        <a href="PIPL_MT_CommercialValue.aspx">Commercial Value</a>
+                                    </li>
+                                    <li id="li_mt_tradeterms" runat="server" >
+                                        <a href="PIPL_MT_TradeTerms.aspx">Trade Terms</a>
+                                    </li>
+                                    <li id="li_mt_pickuplocation" runat="server" >
+                                        <a href="PIPL_MT_PickUpLocation.aspx">Pick-up Location</a>
+                                    </li>
+                                    <li id="li_mt_packng" runat="server" >
+                                        <a href="PIPL_MT_Packing.aspx">Packing</a>
+                                    </li>
+                                    <li id="li_mt_natureofgoods" runat="server" >
+                                        <a href="PIPL_MT_NatureOfGoods.aspx">Nature of Goods</a>
+                                    </li>
+                                    <li id="li_mt_countryoforigin" runat="server" >
+                                        <a href="PIPL_MT_CountryOfOrigin.aspx">Country of Origin</a>
+                                    </li>
+                                    <li id="li_mt_purpose" runat="server" >
+                                        <a href="PIPL_MT_Purpose.aspx">Purpose</a>
+                                    </li>
+                                    <li id="li_mt_caseunit" runat="server" >
+                                        <a href="PIPL_MT_CaseUnit.aspx">Case Unit</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_pipl_invoceentryi" runat="server">
+                                        <a href="PIPL_InvoiceEntry.aspx?ControlNo_From_Details=">Request Entry</a>
+                                    </li>
+                                    <li id="li_pipl_invoiceinquiry" runat="server">
+                                        <a href="PIPL_InvoiceInquiry.aspx">Request Monitoring</a>
+                                    </li>
+                                    <li id="li_pipl_approvalform" runat="server">
+                                        <a href="PIPL_ApprovalForm.aspx">Request For Approval</a>
+                                    </li>  
+                                    <li id="li_pipl_AllRequest" runat="server">
+                                        <a href="PIPL_AllRequestForm.aspx">All Request</a>
+                                    </li>                                 
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">SERVICE REPAIR FORM</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="A1" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_srf_purposeofpullout" runat="server" >
+                                        <a href="SRF_MT_PurposeOfPullOut.aspx">Purpose of Pull Out</a>
+                                    </li>
+                                    <li id="li_srf_loa" runat="server" >
+                                        <a href="SRF_MT_LOA.aspx">LOA</a>
+                                    </li>
+                                    <li id="li_srf_loa_distribution" runat="server" >
+                                        <a href="SRF_MT_LOA_Distribution.aspx">LOA Distribution</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_srf_entry" runat="server">
+                                        <a href="SRF_RequestEntry.aspx?SRF_ControlNo_From_Details=">Request Entry</a>
+                                    </li>
+                                    <li id="li_srf_monitoring" runat="server">
+                                        <a href="SRF_RequestInquiry.aspx">Request Monitoring</a>
+                                    </li>
+                                    <li id="li_srf_approval" runat="server">
+                                        <a href="SRF_ApprovalForm.aspx">Request For Approval</a>
+                                    </li>  
+                                    <li id="li_srf_allrequest" runat="server">
+                                        <a href="SRF_AllRequest.aspx">All Request</a>
+                                    </li>  
+                                    <li id="li_srf_allrequestfreeform" runat="server">
+                                        <a href="SRF_AllRequestFreeForm.aspx">All Request (Free Form)</a>
+                                    </li>                               
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">REQUEST FOR QUOTATION</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_rfq_section" runat="server" >
+                                        <a href="RFQ_MT_Section.aspx">Section Table</a>
+                                    </li>
+                                    <li id="li_rfq_department" runat="server" >
+                                        <a href="RFQ_MT_Department.aspx">Department</a>
+                                    </li>
+                                    <li id="li_rfq_division" runat="server" >
+                                        <a href="RFQ_MT_Division.aspx">Division</a>
+                                    </li>
+                                    <li id="li_rfq_pc" runat="server" >
+                                        <a href="RFQ_MT_PC.aspx">PC</a>
+                                    </li>
+                                    <li id="li_rfq_hq" runat="server" >
+                                        <a href="RFQ_MT_HQ.aspx">HQ</a>
+                                    </li>
+                                    <li id="li_rfq_category" runat="server" >
+                                        <a href="RFQ_MT_Category.aspx">Category</a>
+                                    </li>
+                                    <li id="li_rfq_unitofmeasure" runat="server" >
+                                        <a href="RFQ_MT_UnitOfMeasure.aspx">Unit Of Measure</a>
+                                    </li>
+                                    <li id="li_rfq_currency" runat="server" >
+                                        <a href="RFQ_MT_Currency.aspx">Currency</a>
+                                    </li>
+                                    <li id="li_rfq_supplier" runat="server" >
+                                        <a href="RFQ_MT_Supplier.aspx">Supplier</a>
+                                    </li>
+                                    <li id="li_rfq_buyer_information" runat="server" >
+                                        <a href="RFQ_MT_BuyerInformation.aspx">Buyer Information</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_rfq_requestentry" runat="server">
+                                        <a href="RFQ_RequestEntry.aspx?RFQNo_From_Inquiry=">Request Entry</a>
+                                    </li>
+                                    <li id="li_rfq_requestinquiry" runat="server">
+                                        <a href="RFQ_Monitoring.aspx">Request Monitoring</a>
+                                    </li>
+                                    <li id="li_rfq_myrequesterrequest" runat="server">
+                                        <a href="RFQ_MyRequesterItems.aspx">My Requesters Items</a>
+                                    </li>
+                                    <li id="li_rfq_purchasingreceiving" runat="server">
+                                        <a href="RFQ_PurchasingReceiving.aspx">Request For Receiving</a>
+                                    </li> 
+                                    <li id="li_rfq_withnoresponse" runat="server">
+                                        <a href="RFQ_WithNoResponse.aspx">RFQ With No Response</a>
+                                    </li> 
+                                    <li id="li_rfq_approvalform" runat="server">
+                                        <a href="RFQ_ApprovalForm.aspx">Request For Approval</a>
+                                    </li> 
+                                    <li id="li_rfq_allapprovedrequest" runat="server">
+                                        <a href="RFQ_AllRequest.aspx">All Request</a>
+                                    </li> 
+                                    <li id="li_rfq_onepage" runat="server">
+                                        <a href="RFQ_OnePage.aspx">OnePage</a>
+                                    </li>     
+                                    <li id="li_rfq_notmycategory" runat="server">
+                                        <a href="RFQ_NotMyCategoryHistory.aspx">Not My Category History</a>
+                                    </li>                            
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Reporting</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_rfq_statusreport" runat="server">
+                                        <a href="RFQ_StatusReport.aspx">Status Report</a>
+                                    </li>     
+                                    <li id="li_rfq_allrequest_exporttoexcel" runat="server">
+                                        <a href="RFQ_AllRequest_ExportToExcel.aspx?trans=sending">Export to Excel (For Sending)</a>
+                                    </li>   
+                                    <li id="li_rfq_allrequest_exporttoexcel_resend" runat="server">
+                                        <a href="RFQ_AllRequest_ExportToExcel.aspx?trans=resend">Export to Excel (For Resend)</a>
+                                    </li>    
+                                    <li id="li_rfq_allrequest_exporttoexcel_approved" runat="server">
+                                        <a href="RFQ_AllRequest_ExportToExcel.aspx?trans=approved">Export to Excel (All Approved)</a>
+                                    </li>                                                             
+                                </ul>
+                            </li>
+                            
+                            
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">URGENT REQUEST FORM</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="A3" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_urf_reason" runat="server" >
+                                        <a href="URF_MT_Reason.aspx">Reason</a>
+                                    </li>                                                                        
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_urf_requestentry" runat="server">
+                                        <a href="URF_RequestEntry.aspx?URFNo_From_Inquiry=">Request Entry</a>
+                                    </li>
+                                    <li id="li_urf_requestinquiry" runat="server">
+                                        <a href="URF_RequestInquiry.aspx">Request Monitoring</a>
+                                    </li>
+                                    <li id="li_urf_approvalform" runat="server">
+                                        <a href="URF_ApprovalForm.aspx">Request For Approval</a>
+                                    </li> 
+                                    <li id="li_urf_receivingentry" runat="server">
+                                        <a href="URF_ReceivingEntry.aspx">Request Receiving Entry</a>
+                                    </li>                                      
+                                    <li id="li_urf_allrequest" runat="server">
+                                        <a href="URF_AllRequest.aspx">All Request</a>
+                                    </li>                                 
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">DISCREPANCY REQUEST FORM</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="A4" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_drf_typesofabnormality" runat="server" >
+                                        <a href="DRF_MT_TypesOfAbnormality.aspx">Type of Abnormality</a>
+                                    </li>                                                                        
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_drf_requestentry" runat="server">
+                                        <a href="DRF_RequestEntry.aspx?DRFNo_From_Inquiry=">Request Entry</a>
+                                    </li>
+                                    <li id="li_drf_requestinquiry" runat="server">
+                                        <a href="DRF_RequestInquiry.aspx">Request Monitoring</a>
+                                    </li>
+                                    <li id="li_drf_approvalform" runat="server">
+                                        <a href="DRF_ApprovalForm.aspx">Request For Approval</a>
+                                    </li> 
+                                    <li id="li_drf_receivingentry" runat="server">
+                                        <a href="DRF_ReceivingEntry.aspx">Request Receiving Entry</a>
+                                    </li>                                      
+                                    <li id="li_drf_allrequest" runat="server">
+                                        <a href="DRF_AllRequest.aspx">All Request</a>
+                                    </li>                                 
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">CANCEL REQUEST FORM</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="A5" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_crf_mt_reason" runat="server" >
+                                        <a href="CRF_MT_Reason.aspx">Reason</a>
+                                    </li>                                                                        
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_crf_requestentry" runat="server">
+                                        <a href="CRF_RequestEntry.aspx?CRFNo_From_Inquiry=">Request Entry</a>
+                                    </li>
+                                    <li id="li_crf_requestinquiry" runat="server">
+                                        <a href="CRF_RequestInquiry.aspx">Request Monitoring</a>
+                                    </li>
+                                    <li id="li_crf_approvalform" runat="server">
+                                        <a href="CRF_ApprovalForm.aspx">Request For Approval</a>
+                                    </li> 
+                                    <li id="li_crf_receivingentry" runat="server">
+                                        <a href="CRF_ReceivingEntry.aspx">Request Receiving Entry</a>
+                                    </li>                                      
+                                    <li id="li_crf_allrequest" runat="server">
+                                        <a href="CRF_AllRequest.aspx">All Request</a>
+                                    </li>                                 
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li runat="server" id="li_permit_license_monitoring">
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <span style="font-weight:normal; font-size:12px;">PERMIT / LICENSE MONITORING</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="A6" runat="server">
+                                    <span style="font-weight:normal; font-size:12px;">Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_plm_mt_permitcertificates" runat="server" >
+                                        <a href="PLM_MT_PermitCertificates.aspx">Permit Certificates</a>
+                                    </li>    
+                                    <li id="li_plm_mt_supplier" runat="server" >
+                                        <a href="PLM_MT_Supplier.aspx">Supplier/Broker/Buyer Table</a>
+                                    </li>     
+                                    <li id="li_plm_mt_governmentagencies" runat="server" >
+                                        <a href="PLM_MT_GovernmentAgencies.aspx">Permit Certificate Agency</a>
+                                    </li>                                                                    
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle">
+                                    <span style="font-weight:normal; font-size:12px;">Transactions</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_plm_permitentry" runat="server">
+                                        <a href="PLM_Permit.aspx">Permit / License</a>
+                                    </li>
+                                    <li id="li_plm_permithistory" runat="server">
+                                        <a href="PLM_PermitHistory.aspx">Permit History</a>
+                                    </li>                                                             
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                                   
+                    <li>
+                        <a href="javascript:void(0);" class="menu-toggle" visible="false">
+                            <span style="font-weight:normal; font-size:12px;">SYSTEM ADMINISTRATION</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle" id="A2" runat="server" visible="true">
+                                    <span style="font-weight:normal; font-size:12px;">Common Maintenance Table</span>
+                                </a>
+                                <ul class="ml-menu">
+                                    <li id="li_sa_common_useraccess" runat="server" >
+                                        <a href="SA_Common_UserAccess.aspx">User Access</a>
+                                    </li>
+                                    <li id="li_sa_servicelogs" runat="server" >
+                                        <a href="SA_Common_ServiceLogs.aspx">Service Transaction Logs</a>
+                                    </li>
+                                    
+                                </ul>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    
+                </ul>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    &copy; 2018 - 2019 <a href="javascript:void(0);" style="color:#9E9E9E">REPI</a>
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.1
+                </div>
+            </div>
+            <!-- #Footer -->
+        </div>
+        <!-- #END# Left Sidebar -->       
+    </div>--%>
+
+        <div style="padding-top:25px;">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">        
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    
+    
+    
+    <script src="plugins/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
+    <script src="plugins/jquery-slimscroll/jquery.slimscroll.js" type="text/javascript"></script>
+    <script src="plugins/node-waves/waves.js" type="text/javascript"></script>
+    <script src="plugins/multi-select/js/jquery.multi-select.js" type="text/javascript"></script>    
+    <script src="plugins/jquery-countto/jquery.countTo.js" type="text/javascript"></script>
+    <script src="plugins/raphael/raphael.min.js" type="text/javascript"></script>
+    <script src="plugins/morrisjs/morris.js" type="text/javascript"></script>
+    <script src="plugins/chartjs/Chart.bundle.js" type="text/javascript"></script>
+    <script src="plugins/jquery-sparkline/jquery.sparkline.js" type="text/javascript"></script>
+    <script src="js/admin.js" type="text/javascript"></script>
+    <script src="js/demo.js" type="text/javascript"></script>    
+    <script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
+    
+    </form>
+</body>
+</html>
