@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<TABLE>
+  <REQUEST>
+    <RefId>121483</RefId>
+    <Description>4102023_5</Description>
+    <Specs>4102023_5</Specs>
+    <Maker>4102023_5</Maker>
+    <Quantity>1</Quantity>
+    <UOM>PCS</UOM>
+    <Remarks></Remarks>
+    <PricePerUnit>13.0000</PricePerUnit>
+    <LeadTime>3</LeadTime>
+    <SupplierRemarks></SupplierRemarks>
+    <Currency>USD</Currency>
+    <CurrencyCollections>JPY¥,PHP,USD,</CurrencyCollections>
+    <Aging>Saturday, April 15, 2023</Aging>
+  </REQUEST>
+  <REQUEST>
+    <RefId>121484</RefId>
+    <Description>4102023_6</Description>
+    <Specs>4102023_6</Specs>
+    <Maker>4102023_6</Maker>
+    <Quantity>1</Quantity>
+    <UOM>PCS</UOM>
+    <Remarks></Remarks>
+    <PricePerUnit>15.0000</PricePerUnit>
+    <LeadTime>5</LeadTime>
+    <SupplierRemarks></SupplierRemarks>
+    <Currency>USD</Currency>
+    <CurrencyCollections>JPY¥,PHP,USD,</CurrencyCollections>
+    <Aging>Saturday, April 15, 2023</Aging>
+  </REQUEST>
+</TABLE>
