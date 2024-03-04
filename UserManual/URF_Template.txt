@@ -1,0 +1,98 @@
+<html>
+<head>
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+
+<title>
+	val_title
+</title>
+
+<script>
+
+function exportTableToCSV() {
+    var csv = [];
+    var rows = document.querySelectorAll("table tr");
+    var prefix = 'rdd';
+	var csvValue = '';
+	var csvValueHeader = '';
+	
+	try 
+	{
+		for (var i = 0; i < rows.length; i++) {
+			var row = [], cols = rows[i].querySelectorAll("td, th");
+			
+			for (var j = 0; j < cols.length; j++) 
+			{
+				if (i > 0)
+					{
+						if (j == 9)
+						{
+							if (document.getElementById(prefix + i).value.split(',').join('') == '')
+							{
+								csvValue+= "-" + "\n";
+							} else {
+								csvValue+= document.getElementById(prefix + i).value.split(',').join('') + "\n";
+							}	
+						} else {
+							csvValue+= cols[j].innerText + ",";
+						}
+					} else {
+						if (j == 9)
+						{
+							csvValueHeader+= cols[j].innerText + "\n";
+						} else {
+							csvValueHeader+= cols[j].innerText + ",";
+						}
+						
+					}			
+			}						
+							
+		}
+		
+		csv.push(csvValueHeader + csvValue);
+		
+		//---------------------------------------------------------------------------------
+		var blob = new Blob([csv]);
+
+		  if (window.navigator.msSaveOrOpenBlob){
+			window.navigator.msSaveBlob(blob, "filename.csv");
+		  }
+		  else {
+			var a = window.document.createElement("a");
+
+			a.href = window.URL.createObjectURL(blob, {
+			  type: "text/plain"
+			});
+			a.download = "filename.csv";
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+
+		}
+		//---------------------------------------------------------------------------------
+	}
+	catch(err) {
+		alert(err.message);
+	}
+}
+
+
+</script>
+
+</head>
+<body>
+
+<p style="height: 21px; font-size:20px;"><b>CTRLNo.: </b>val_ctrlno</p>
+<p style="height: 21px; font-size:20px;"><b>SUPPLIER:</b>val_supplier</p>
+<p style="height: 21px; font-size:20px;"><b>REASON: </b>val_reason</p>
+
+<p>val_table</p>
+<button type="button" onclick="exportTableToCSV()">Save</button>
+
+</body>
+</html>
