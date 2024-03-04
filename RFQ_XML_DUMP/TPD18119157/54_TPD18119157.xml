@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<TABLE>
+  <REQUEST>
+    <RefId>61089</RefId>
+    <Description>HOLDING PIN BRACKET (SAME)</Description>
+    <Specs>ET25M-7901-1</Specs>
+    <Maker>ANY</Maker>
+    <Quantity>1</Quantity>
+    <UOM>PC</UOM>
+    <Remarks></Remarks>
+    <PricePerUnit>3,500.0000</PricePerUnit>
+    <LeadTime>20</LeadTime>
+    <SupplierRemarks></SupplierRemarks>
+    <Currency>PHP</Currency>
+    <CurrencyCollections>JPY¥,USD,PHP,</CurrencyCollections>
+    <Aging>Monday, December 3, 2018</Aging>
+  </REQUEST>
+  <REQUEST>
+    <RefId>61090</RefId>
+    <Description>HOLDING PIN BRACKET (OPPOSITE)</Description>
+    <Specs>ET25M-7901-1</Specs>
+    <Maker>ANY</Maker>
+    <Quantity>1</Quantity>
+    <UOM>PC</UOM>
+    <Remarks></Remarks>
+    <PricePerUnit>3,500.0000</PricePerUnit>
+    <LeadTime>20</LeadTime>
+    <SupplierRemarks></SupplierRemarks>
+    <Currency>PHP</Currency>
+    <CurrencyCollections>JPY¥,USD,PHP,</CurrencyCollections>
+    <Aging>Monday, December 3, 2018</Aging>
+  </REQUEST>
+</TABLE>
