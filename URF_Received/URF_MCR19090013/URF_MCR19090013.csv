@@ -1,0 +1,3 @@
+RefId,PONO,PRNO,ItemName,Specification,Quantity,UnitOfMeasure,DeliveryConfirmationDate,RequestedDeliveryDate,ReplyDeliveryDate
+10042,1,1,1,1,1,5,1,1,Cannot Deliver
+10043,2,2,2,2,2,5,2,2,Cannot commit
