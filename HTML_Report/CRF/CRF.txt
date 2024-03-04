@@ -1,0 +1,239 @@
+﻿<body style="font-family: tahoma; margin-left: auto; margin-right: auto; font-size:10px; height:95%;">
+<div style="border-color:black; border-style:solid; width:95%; margin-left: auto; margin-right: auto;">
+	<h2 style="text-align: center;">ROHM Electronics Philippines, Inc.</h2>
+	<p style="text-align: center;">TELEPHONE NO. (632) 894-1536</p>
+	<h1 style="text-align: center;"><strong>CANCEL REQUEST FORM (CRF)</strong></h1>
+	<p><strong></strong></p>
+	<table border="0" style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+	<tbody>
+	<tr>
+	<td style="width: 50%;"></td>
+	<td style="width: 50%;">CTRL #: val_ctrlno</td>
+	</tr>
+	</tbody>
+	</table>
+	<table border="0" style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; font-size:10px;">
+	<tbody>
+	<tr>
+	<td style="width: 30%;"><strong>To:</strong> val_supplier</td>
+	<td style="width: 30%;"><strong>ATTN:</strong> val_attention</td>
+	</tr>
+	<tr>
+	<td style="width: 30%;"><strong>Division:</strong> val_division</td>
+	<td style="width: 30%;"><strong>Dept./Process:</strong> val_department</td>
+	</tr>
+	</tbody>
+	</table>
+	<p></p>
+	<table style="height: 126px; width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; font-size:10px;">
+	<tbody>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;"><strong>PR.No.:&nbsp;</strong></td>
+	<td style="width: 70%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_prno</td>
+	</tr>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;"><strong>PO.No.:&nbsp;</strong></td>
+	<td style="width: 70%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_pono</td>
+	</tr>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;"><strong>Description:&nbsp;</strong></td>
+	<td style="width: 70%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_description</td>
+	</tr>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;"><strong>Type:&nbsp;</strong></td>
+	<td style="width: 70%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_type</td>
+	</tr>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;"><strong>Quantity:&nbsp;</strong></td>
+	<td style="width: 70%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_quantity</td>
+	</tr>
+	</tbody>
+	</table>
+	<table style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+	<tbody>
+	<tr>
+	<td style="width: 50%;"><strong>REASON</strong></td>
+	</tr>
+	</tbody>
+	</table>
+	<table style="height: 126px; width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; font-size:11px;">
+	<tbody>
+	<tr style="height: 21px;">
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_supplierchange; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Supplier Change</strong></td>
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_changepacking; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Change Packing</strong></td>
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_changespecification; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Change Specification</strong></td>
+	</tr>
+	<tr style="height: 21px;">
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_pricechange; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Price Change</strong></td>
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_changemaker; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Change Maker</strong></td>
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_stopproduction; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Stop Production</strong></td>
+	</tr>
+	<tr style="height: 21px;">
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_quantitychange; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Quantity Change</strong></td>
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_outofstock; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Out of Stock</strong></td>
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_excessorder; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Excess Order</strong></td>
+	</tr>
+	<tr style="height: 21px;">
+		<td style="width: 2%;"><div style="height:10px; width:10px; background-color:valreason_other; border-color:black; border-style:solid;"></div></td>
+		<td style="width: 25%; height: 21px;"><strong>Others</strong></td>
+		<td colspan="4" style="width: 10%; height: 21px;  border-bottom-style: solid; border-bottom-width: 1px;">val_reason</td>
+		<td style="width: 25%; height: 21px;"></td>
+		<td style="width: 25%; height: 21px;"></td>
+		<td style="width: 25%; height: 21px;"></td>
+	</tr>
+	</tbody>
+	</table>
+	<p></p>
+	<table style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; font-size:10px;">
+	<tbody>
+	<tr>
+	<td style="width: 30%; text-align: center; border-style:solid; border-width:1px;"><strong>REQUESTING DIVISION</strong></td>
+	<td style="width: 5%;"></td>
+	<td style="width: 30%; text-align: center; border-style:solid; border-width:1px;"><strong>SUPPLY CHAIN MANAGEMENT DIVISION</strong></td>
+	</tr>
+	</tbody>
+	</table>
+	<table style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; height: 60px; font-size:10px;">
+	<tbody>
+	<tr style="height: 75px;">
+	<td style="width: 15%; height: 65px; text-align: center; border-style:solid; border-width:1px;">
+	<p style="text-align: center; height:8px;"><strong>val_preparedby</strong></p>
+	<p style="height:10px;">val_doa_preparedby</p>
+	<p style="height:10px;">Prepared by:</p>
+	</td>
+	<td style="width: 15%; border-style:solid; border-width:1px; height: 65px; bg_v_nb">
+	<p style="text-align: center; height:8px;"><strong>val_notedby</strong></p>
+	<p style="text-align: center; height:8px;">val_doa_notedby</p>
+	<p style="text-align: center; height:8px;">Noted by:</p>
+	</td>
+	<td style="width: 5%;"></td>
+	<td style="width: 15%; border-style:solid; border-width:1px; height: 65px; bg_v_i">
+	<p style="text-align: center; height:8px;"><strong>val_incharge</strong></p>
+	<p style="text-align: center; height:8px;">val_doa_incharge</p>
+	<p style="text-align: center; height:8px;">In-charge:</p>
+	</td>
+	<td style="width: 15%; border-style:solid; border-width:1px; height: 65px; bg_v_m">
+	<p style="text-align: center; height:8px;"><strong>val_manager</strong></p>
+	<p style="text-align: center; height:8px;">val_doa_manager</p>
+	<p style="text-align: center; height:8px;">Manager:</p>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+	<p></p>
+	<table border="0" style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; height: 21px;">
+	<tbody>
+	<tr style="height: 21px;">
+	<td style="width: 100%; height: 21px;"><strong>SUPPLIER'S REPLY</strong></td>
+	</tr>
+	</tbody>
+	</table>
+	<table style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; height: 63px;">
+	<tbody>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;">Confirmed By:</td>
+	<td style="width: 50%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_confirmedby</td>
+	</tr>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;">Date Confirmed:</td>
+	<td style="width: 50%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_dateconfirmed</td>
+	</tr>
+	<tr style="height: 21px;">
+	<td style="width: 10%; height: 21px;">Notes:</td>
+	<td style="width: 50%; height: 21px; border-bottom-style: solid; border-bottom-width: 1px;">val_notes</td>
+	</tr>
+	<tr  colspan="2" style="height: 21px;">
+	<td style="width:25%; font-size:11px;"><strong>PLEASE SEND YOUR CONFIRMATION VIA EMAIL</strong></td>
+	<td></td>
+	</tr>
+	</tbody>
+	</table>
+	<table style="width: 95%;border-collapse: collapse; margin-left: auto; margin-right: auto;">
+	<tbody>
+	<tr>
+	<td style="width: 50%; border-bottom-style: solid; border-bottom-width: 2px;">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table>
+	
+	<table border="0" style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; height: 21px;">
+	<tbody>
+	<tr style="height: 21px;">
+	<td style="width: 100%; height: 21px; padding-bottom:10px;"><strong>CANCELLATION APPROVAL:</strong></td>
+	</tr>
+	</tbody>
+	</table>
+	<table style="width: 95%; border-collapse: collapse; margin-left: auto; margin-right: auto; height: 60px; font-size:10px;">
+	<tbody>
+	<tr style="height: 60px;">
+	<td style="width: 10%; height: 60px; text-align: center; border-style:solid; border-width:1px;">
+	<p style="text-align: center;"><strong>Buyer In-charge</strong></p>
+	<p style="text-align: center;">val_closed</p>
+	</td>
+	<td>
+		<p style="text-align: left; margin-left:30px; font-size:16px;"><strong>For RoProS Approval</strong></p>
+	<td>
+	</tr>
+	</tbody>
+	</table>
+	<!--
+	<td style="width: 5%;"></td>
+	<td style="width: 10%; border-style:solid; border-width:1px; height: 60px;">
+	<p style="text-align: center;"><strong>Sec. Manager</strong></p>
+	<p style="text-align: center;">&nbsp;</p>
+	<p style="text-align: center;">&nbsp;</p>
+	</td>
+	<td style="width: 10%; border-style:solid; border-width:1px; height: 60px;">
+	<p style="text-align: center;"><strong>Dept. Manager</strong></p>
+	<p style="text-align: center;">&nbsp;</p>
+	<p style="text-align: center;">&nbsp;</p>
+	</td>
+	<td style="width: 10%; border-style:solid; border-width:1px; height: 60px;">
+	<p style="text-align: center;"><strong>Div. Manager</strong></p>
+	<p style="text-align: center;">&nbsp;</p>
+	<p style="text-align: center;">&nbsp;</p>
+	</td>
+	<td style="width: 10%; border-style:solid; border-width:1px; height: 60px;">
+	<p style="text-align: center;"><strong>HQ. Manager</strong></p>
+	<p style="text-align: center;">&nbsp;</p>
+	<p style="text-align: center;">&nbsp;</p>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+	-->
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+</div>
+<table border="0" style="width: 80%; border-collapse: collapse; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="width: 50%; font-size:10px;"><strong>REPISG35002<font style="font-size:12px;">&bull;</font>05<font style="font-size:12px;">&bull;</font>005</strong></td>
+<td style="width: 50%; font-size:10px;"><strong>SUPPLY CHAIN MANAGEMENT DIVISION</strong></td>
+</tr>
+</tbody>
+</table>
+
+</body>
